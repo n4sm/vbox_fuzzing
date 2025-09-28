@@ -1,0 +1,47 @@
+Format: 1.8
+Date: Thu, 19 Jun 2025 05:27:01 +0000
+Source: linux-upstream
+Binary: linux-headers-6.8.0-nyx+ linux-image-6.8.0-nyx+ linux-image-6.8.0-nyx+-dbg linux-libc-dev
+Built-For-Profiles: noudeb
+Architecture: source amd64
+Version: 6.8.0-g0509b850d2bd-1
+Distribution: noble
+Urgency: low
+Maintainer: nasm <nasm@t7820-1>
+Changed-By: nasm <nasm@t7820-1>
+Description:
+ linux-headers-6.8.0-nyx+ - Linux kernel headers for 6.8.0-nyx+ on amd64
+ linux-image-6.8.0-nyx+ - Linux kernel, version 6.8.0-nyx+
+ linux-image-6.8.0-nyx+-dbg - Linux kernel debugging symbols for 6.8.0-nyx+
+ linux-libc-dev - Linux support headers for userspace development
+Changes:
+ linux-upstream (6.8.0-g0509b850d2bd-1) noble; urgency=low
+ .
+   * Custom built Linux kernel.
+Checksums-Sha1:
+ 496813bb8423da2569c3692327a095f20a1c9117 1290 linux-upstream_6.8.0-g0509b850d2bd-1.dsc
+ bb19a322df906c8faa32f4aec916334391fb48be 234870109 linux-upstream_6.8.0-g0509b850d2bd.orig.tar.gz
+ 3aded1afe326812ccfd9625a4cfd6422a6715857 73251 linux-upstream_6.8.0-g0509b850d2bd-1.debian.tar.gz
+ e8aed777b26bccb2c4c37e9b481c58dc8bddc778 9789382 linux-headers-6.8.0-nyx+_6.8.0-g0509b850d2bd-1_amd64.deb
+ ef8b5153f00a12af6730446bf717151b1a5a9948 1254787304 linux-image-6.8.0-nyx+-dbg_6.8.0-g0509b850d2bd-1_amd64.deb
+ f2e7cd9dcb225f66c5a3f0579dceeace32aebbcb 169560672 linux-image-6.8.0-nyx+_6.8.0-g0509b850d2bd-1_amd64.deb
+ 78b0ae5466355840be8754ac4cc00c91dd733c8d 1399262 linux-libc-dev_6.8.0-g0509b850d2bd-1_amd64.deb
+ 4d787db57222a82e696a5390667a8fdd9818ef4f 8957 linux-upstream_6.8.0-g0509b850d2bd-1_amd64.buildinfo
+Checksums-Sha256:
+ 948a0d3e9db54b4534cfc3c8342144c3c600f14e8ac9c7948018716581a149e8 1290 linux-upstream_6.8.0-g0509b850d2bd-1.dsc
+ 70edc91c817f7578d72b6dcf3d84416b97e5a3eb0dcd428fdeaf46c0d8bf5bf8 234870109 linux-upstream_6.8.0-g0509b850d2bd.orig.tar.gz
+ d9e2084005379e6a066211b50ab9a25a77397d05d8e2e66d620e43f569a32b4a 73251 linux-upstream_6.8.0-g0509b850d2bd-1.debian.tar.gz
+ 89f172e3ff5b90b724b06755571f6c5978d8109fb7d7d7f3d7a74382046c7d9d 9789382 linux-headers-6.8.0-nyx+_6.8.0-g0509b850d2bd-1_amd64.deb
+ fe999b6d5eff001a38a8535498ea793125c6dbddd4b981d4fe16ddc54ff7f435 1254787304 linux-image-6.8.0-nyx+-dbg_6.8.0-g0509b850d2bd-1_amd64.deb
+ ea806660a5bd41af0fcba73d63416c2bdabb468b5ea9f9c188f1b6df3ab34393 169560672 linux-image-6.8.0-nyx+_6.8.0-g0509b850d2bd-1_amd64.deb
+ 789400aabe03a800933c10fbf26e28d6e996267bffde27890ece31dc9907a873 1399262 linux-libc-dev_6.8.0-g0509b850d2bd-1_amd64.deb
+ bfcb9e93b982bac58c1b0c41019072f0925137ec553451e26f164ec275d348eb 8957 linux-upstream_6.8.0-g0509b850d2bd-1_amd64.buildinfo
+Files:
+ 019a3b7c528bc67be4b2267a23dcc274 1290 kernel optional linux-upstream_6.8.0-g0509b850d2bd-1.dsc
+ 599d97c8f3ecd252a49e46ae889dabfe 234870109 kernel optional linux-upstream_6.8.0-g0509b850d2bd.orig.tar.gz
+ 3eb218797269ac0ed3b0783f580b683e 73251 kernel optional linux-upstream_6.8.0-g0509b850d2bd-1.debian.tar.gz
+ 8966ab30fdab84e6f623429243eef8c2 9789382 kernel optional linux-headers-6.8.0-nyx+_6.8.0-g0509b850d2bd-1_amd64.deb
+ 0d79a815c0d0e46f4999878bcd16c6d2 1254787304 debug optional linux-image-6.8.0-nyx+-dbg_6.8.0-g0509b850d2bd-1_amd64.deb
+ f0ef6af646208872a5b8f8b83d4ae92d 169560672 kernel optional linux-image-6.8.0-nyx+_6.8.0-g0509b850d2bd-1_amd64.deb
+ c3270435ec3fb30faba7bf081927fe29 1399262 devel optional linux-libc-dev_6.8.0-g0509b850d2bd-1_amd64.deb
+ db9be30a3054eb28fc916d0b5db2b8c7 8957 kernel optional linux-upstream_6.8.0-g0509b850d2bd-1_amd64.buildinfo

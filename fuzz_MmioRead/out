@@ -1,0 +1,1000 @@
+ 1019  vim include/
+ 1020  vim module_harness/
+ 1021  cd gen_L1/
+ 1022  sudo ./run.sh 
+ 1023  cd ../
+ 1024  cd
+ 1025  cd kAFL/
+ 1026  make env
+ 1027  cd
+ 1028  cd vbox_fuzzing/
+ 1029  kafl gui
+ 1030  kafl gui help
+ 1031  QUIET=true kafl gui
+ 1032  QUIET=true kafl gui > /tmp/out
+ 1033  QUIET=true kafl gui 2> /tmp/out
+ 1034  QUIET=true kafl gui
+ 1035  kafl gui 2> /dev/null
+ 1036  cd /dev/shm/kafl_root/
+ 1037  ll
+ 1038  tail -f hprintf_00.log 
+ 1039  tail -f qemu_trace_00.log 
+ 1040  cat serial_00.log 
+ 1041  ll
+ 1042  cd corpus/
+ 1043  ls
+ 1044  ll
+ 1045  ls -lR
+ 1046  cd ../
+ 1047  ls
+ 1048  xxd payload_0 
+ 1049  xxd payload_0  | head
+ 1050  cd ../kafl_root/
+ 1051  xxd payload_0  | head
+ 1052  tail -f payload_0  | head
+ 1053  tail -f payload_0  | head | xxd
+ 1054  tail -f payload_0  | xxd | head
+ 1055  clear
+ 1056  cd kAFL/kafl/qemu/nyx/
+ 1057  ls
+ 1058  vim hypercall/
+ 1059  grep -ri "GET_GLOBAL_STATE()->parent_cr3" .
+ 1060  vim memory_access.c 
+ 1061  sudo vim memory_access.c 
+ 1062  vim ./hypercall/hypercall.c
+ 1063  grep -ri "SUBMIT_CR3" .
+ 1064  vim ./hypercall/hypercall.c
+ 1065  sudo vim ./hypercall/hypercall.c
+ 1066  grep -ri "GET_GLOBAL_STATE()->decoder" .
+ 1067  vim pt.c 
+ 1068  grep -ri "pt_init_decoder" .
+ 1069  vim nested_hypercalls.c 
+ 1070  sudo vim nested_hypercalls.c 
+ 1071  sudo vim hypercall/hypercall.c 
+ 1072  sudo vim kvm_nested.c 
+ 1073  sudo vim nested_hypercalls.c 
+ 1074  clear
+ 1075  cd
+ 1076  cd vbox_fuzzing/gen_L1/
+ 1077  sudo ./run.sh 
+ 1078  clear
+ 1079  cd kAFL/kafl/qemu/nyx/
+ 1080  vim nested_hypercalls.c 
+ 1081  grep -ri "payload_slot" .
+ 1082  vim memory_access.c 
+ 1083  grep -ri "payload_slot" .
+ 1084  vim nested_hypercalls.c 
+ 1085  grep -ri "get_nested_host_cr3" .
+ 1086  vim kvm_nested.c 
+ 1087  grep -ri "get_nested_host_cr3" .
+ 1088  vim nested_hypercalls.c 
+ 1089  sudo vim nested_hypercalls.c 
+ 1090  cd ../
+ 1091  ls
+ 1092  ./compile_qemu_nyx.sh
+ 1093  ./compile_qemu_nyx.sh debug_static
+ 1094  sudo ./compile_qemu_nyx.sh debug_static
+ 1095  ./compile_qemu_nyx.sh 
+ 1096  ./compile_qemu_nyx.sh static
+ 1097  sudo ./compile_qemu_nyx.sh static
+ 1098  tail -f /dev/shm/kafl_root/qemu_trace_00.log 
+ 1099  tail -f /dev/shm/kafl_root/hprintf_00.log 
+ 1100  ssh nasm@localhost -p 2222
+ 1101  cd
+ 1102  cd vbox_fuzzing/
+ 1103  ls
+ 1104  vim module_harness/
+ 1105  ls
+ 1106  la
+ 1107  ssh nasm@localhost -p 2222
+ 1108  cd kAFL/
+ 1109  make emv
+ 1110  make env
+ 1111  cd
+ 1112  cd vbox_fuzzing/
+ 1113  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1114  cd gen
+ 1115  cd vbox_fuzzing/gen_L1/
+ 1116  sudo ./run.sh 
+ 1117  ps aux | grep qemu
+ 1118  cd vbox_fuzzing/
+ 1119  vim module_harness/
+ 1120  cd vbox_fuzzing/
+ 1121  vim module_harness/
+ 1122  vim include/
+ 1123  vim module_harness/
+ 1124  make run_harness 
+ 1125  vim include/
+ 1126  make run_harness 
+ 1127  vim include/
+ 1128  make run_harness 
+ 1129  vim include/
+ 1130  make run_harness 
+ 1131  ssh nasm@localhost -p 2222
+ 1132  cd /dev/shm/kafl_root/
+ 1133  ll
+ 1134  tail -f hprintf_00.log
+ 1135  sudo dmesg -w
+ 1136  ls
+ 1137  cd
+ 1138  ls
+ 1139  cd vbox_fuzzing/
+ 1140  vim module_harness/
+ 1141  make run_harness 
+ 1142  cd
+ 1143  cd kAFL/
+ 1144  make env
+ 1145  cd
+ 1146  cd vbox_fuzzing/
+ 1147  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1148  vim /home/nasm/kAFL/kafl/qemu/nyx/snapshot/memory/block_list.c
+ 1149  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1150  vim /home/nasm/kAFL/kafl/qemu/nyx/snapshot/memory/block_list.c
+ 1151  cd /home/nasm/kAFL/kafl/qemu/nyx/snapshot/
+ 1152  grep -ri snapshot_page_blocklist_add .
+ 1153  grep -ri snapshot_page_blocklist_add ../
+ 1154  vim ../fast_vm_reload.c 
+ 1155  grep -ri fast_reload_blacklist_page ../
+ 1156  vim ../memory_access.c 
+ 1157  sudo vim ../fast_vm_reload.c 
+ 1158  cd ../../
+ 1159  sudo ./compile_qemu_nyx.sh static
+ 1160  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1161  sudo pkill qemu
+ 1162  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1163  cd
+ 1164  cd vbox_fuzzing/
+ 1165  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1166  clear
+ 1167  cd vbox_fuzzing/
+ 1168  vim module_harness/
+ 1169  make run_harness 
+ 1170  vim module_harness/
+ 1171  make run_harness 
+ 1172  vim module_harness/
+ 1173  make run_harness 
+ 1174  vim module_harness/
+ 1175  make run_harness 
+ 1176  vim kafl.yaml 
+ 1177  cd kAFL/
+ 1178  make env
+ 1179  cd 
+ 1180  cd vno
+ 1181  cd vbox_fuzzing/
+ 1182  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1183  clear
+ 1184  cd vbox_fuzzing/
+ 1185  ls
+ 1186  cd
+ 1187  cd kAFL/kafl/qemu/
+ 1188  ls
+ 1189  cd nyx/
+ 1190  ls
+ 1191  vim nested_hypercalls.c 
+ 1192  vim nested_hypercalls.h 
+ 1193  grep -ri print_configuration .
+ 1194  vim kvm_nested.c 
+ 1195  cd vbox_fuzzing/gen_L1/
+ 1196  sudo ./run.sh 
+ 1197  cd kAFL/
+ 1198  make env
+ 1199  cd
+ 1200  cd vbox_fuzzing/
+ 1201  kafl gui 2>/dev/null
+ 1202  im kafl.yaml 
+ 1203  vim kafl.yaml 
+ 1204  kafl gui 2>/dev/null
+ 1205  ssh nasm@localhost -p 2222
+ 1206  cd vbox_fuzzing/
+ 1207  vim module_harness/
+ 1208  vim include/
+ 1209  make run_harness 
+ 1210  ssh nasm@localhost -p 2222
+ 1211  sudo dmesg -w
+ 1212  vim include/
+ 1213  sudo dmesg -w
+ 1214  vim module_harness/
+ 1215  make run_harness 
+ 1216  sudo dmesg -w
+ 1217  ssh nasm@localhost -p 2222
+ 1218  ls
+ 1219  cd vbox_fuzzing/gen_L1/
+ 1220  sudo ./run.sh 
+ 1221  ssh nasm@localhost -p 2222
+ 1222  ssh nasm@localhost -p 2222
+ 1223  clear
+ 1224  cd kAFL/kafl/qemu/nyx/
+ 1225  ls
+ 1226  vim nested_hypercalls.c 
+ 1227  vim hypercall/
+ 1228  vim nested_hypercalls.c 
+ 1229  vim hypercall/
+ 1230  grep -ri setup_snapshot_once .
+ 1231  vim nested_hypercalls.c 
+ 1232  cd vbox_fuzzing/
+ 1233  cd build_kernel/kafl.linux/
+ 1234  cd
+ 1235  cd vbox_fuzzing/build_kernel/kafl.linux/arch/x86/kvm/vmx/
+ 1236  vim nested.c 
+ 1237  cd
+ 1238  cd vbox_fuzzing/
+ 1239  vim module_harness/
+ 1240  cd gen_L1/
+ 1241  sudo ./run.sh 
+ 1242  cd kAFL/kafl/qemu/nyx/
+ 1243  ls
+ 1244  vim hypercall/hypercall.c 
+ 1245  grep -ri GET_GLOBAL_STATE() .
+ 1246  grep -ri GET_GLOBAL_STATE .
+ 1247  grep -ri GET_GLOBAL_STATE . | grep define
+ 1248  grep -ri global_state .
+ 1249  grep -ri qemu_nyx_state_t .
+ 1250  vim state/state.h 
+ 1251  cd state/
+ 1252  ls
+ 1253  vim snapshot_state.c 
+ 1254  cim state.c 
+ 1255  vim state.c 
+ 1256  cd ../
+ 1257  vim hypercall/hypercall.c 
+ 1258  grep -ri setup_snapshot_once .
+ 1259  vim hypercall/hypercall.c ./
+ 1260  grep -ri setup_snapshot_once ../
+ 1261  vim hypercall/hypercall.c 
+ 1262  grep -ri REQUEST_SAVE_SNAPSHOT_ROOT_FIX_RIP ../
+ 1263  vim ../nyx/fast_vm_reload_
+ 1264  grep -ri set_nested_rip ../
+ 1265  vim ../nyx/kvm_nested.c
+ 1266  cd vbox_fuzzing/
+ 1267  cd gen_L1/
+ 1268  sudo ./run.sh 
+ 1269  ssh nasm@localhost -p 2222
+ 1270  cd vbox_fuzzing/
+ 1271  vim include/nyx_api.h 
+ 1272  vim module_harness/
+ 1273  make run_harness 
+ 1274  sudo desg -w
+ 1275  sudo dmesg -w
+ 1276  cd /dev/shm/kafl_root/
+ 1277  cat hprintf_00.log 
+ 1278  cd -
+ 1279  ls
+ 1280  vim module_harness/
+ 1281  make run_harness 
+ 1282  sudo dmesg -w
+ 1283  vim module_harness/
+ 1284  make run_harness 
+ 1285  sudo dmesg -w
+ 1286  ssh nasm@localhost -p 2222
+ 1287  sudo dmesg -w
+ 1288  cd /dev/shm/kafl_root/
+ 1289  cat hprintf_00.log 
+ 1290  cat qemu_trace_00.log 
+ 1291  cd kAFL/
+ 1292  make env
+ 1293  cd
+ 1294  cd vbox_fuzzing/
+ 1295  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1296  vim kafl.yaml 
+ 1297  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1298  vim kafl.yaml 
+ 1299  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1300  vim kafl.yaml 
+ 1301  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1302  vim kafl.yaml 
+ 1303  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1304  ssh nasm@localhost -p 2222
+ 1305  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1306  cd kAFL/
+ 1307  make env
+ 1308  cd
+ 1309  cd vbox_fuzzing/
+ 1310  kafl gui 2>/dev/null
+ 1311  cd /dev/shm/kafl_root/
+ 1312  ls
+ 1313  tail -f qemu_trace_00.log 
+ 1314  cat hprintf_00.log 
+ 1315  cd
+ 1316  cd vbox_fuzzing/
+ 1317  kafl gui 2>/dev/null
+ 1318  ssh nasm@localhost -p 2222
+ 1319  cd
+ 1320  cd /dev/shm/kafl_root/
+ 1321  cat hprintf_00.log 
+ 1322  date
+ 1323  ll
+ 1324  cat qemu_trace_00.log 
+ 1325  exit
+ 1326  cd 
+ 1327  cd vbox_fuzzing/
+ 1328  kafl gui 2>/dev/null
+ 1329  ssh nasm@localhost -p 2222
+ 1330  cd /dev/shm/kafl_root/
+ 1331  ls
+ 1332  tail -f hp
+ 1333  tail -f hprintf_00.log 
+ 1334  tail -f qemu_trace_00.log 
+ 1335  exit
+ 1336  ssh nasm@localhost -p 2222
+ 1337  cd kAFL/
+ 1338  make env
+ 1339  cd
+ 1340  cd vbox_fuzzing/
+ 1341  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1342  vim kafl.yaml 
+ 1343  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1344  ssh nasm@localhost -p 2222
+ 1345  vim module_harness/
+ 1346  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1347  ssh nasm@localhost -p 2222
+ 1348  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1349  ssh nasm@localhost -p 2222
+ 1350  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1351  ssh nasm@localhost -p 2222
+ 1352  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1353  sh nasm@localhost -p 2222
+ 1354  ssh nasm@localhost -p 2222
+ 1355  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1356  vim kafl.yaml 
+ 1357  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1358  clear
+ 1359  cd vbox_fuzzing/
+ 1360  vim module_harness/
+ 1361  cd
+ 1362  cd kAFL/
+ 1363  make env
+ 1364  cd
+ 1365  cd vbox_fuzzing/
+ 1366  ls
+ 1367  vim module_harness/
+ 1368  vim include/
+ 1369  vim module_harness/
+ 1370  sudo dnesg -w
+ 1371  sudo dmesg -w
+ 1372  cd
+ 1373  cd kAFL/
+ 1374  make env
+ 1375  cd 
+ 1376  cd vbox_fuzzing/
+ 1377  vim include/
+ 1378  vim module_harness/
+ 1379  make run_harness 
+ 1380  sudo dmesg -w
+ 1381  cd
+ 1382  cd kAFL/
+ 1383  make env
+ 1384  cd
+ 1385  cd vbox_fuzzing/
+ 1386  kafl gui 2>/dev/null
+ 1387  cd /dev/shm/kafl_root/
+ 1388  ls
+ 1389  xxd payload_0 | head
+ 1390  ls
+ 1391  cst corpus/regular/payload_00001 
+ 1392  xxd corpus/regular/payload_00001 
+ 1393  kafl gui 2>/dev/null
+ 1394  xxd corpus/regular/payload_00001 
+ 1395  kafl gui 2>/dev/null
+ 1396  cd vbox_fuzzing/
+ 1397  vim module_harness/
+ 1398  make run_harness 
+ 1399  cd build_kernel/
+ 1400  ls
+ 1401  cat ../kafl.yaml 
+ 1402  ssh nasm@localhost -p 2222
+ 1403  cd vbox_fuzzing/gen_L1/n
+ 1404  cd vbox_fuzzing/gen_L1/
+ 1405  sudo ./run.sh 
+ 1406  sudo dmesg -w
+ 1407  sudo ./run.sh 
+ 1408  sudo dmesg -w
+ 1409  sudo ./run.sh 
+ 1410  sudo dnesg -w
+ 1411  sudo dmesg -w
+ 1412  sudo ./run.sh 
+ 1413  ssh nasm@localhost -p 2222
+ 1414  sudo ./run.sh 
+ 1415  ssh nasm@localhost -p 2222
+ 1416  vim run.sh 
+ 1417  sudo ./run.sh 
+ 1418  vim run.sh 
+ 1419  sudo ./run.sh 
+ 1420  cat run.sh 
+ 1421  sudo ./run.sh 
+ 1422  vim run.sh 
+ 1423  sudo ./run.sh 
+ 1424  vim run.sh 
+ 1425  sudo ./run.sh 
+ 1426  vim run.sh 
+ 1427  sudo ./run.sh 
+ 1428  ps aux | grep qemu
+ 1429  sudo ./run.sh 
+ 1430  clear
+ 1431  sudo ./run.sh 
+ 1432  sudo vim ./run.sh 
+ 1433  sudo ./run.sh 
+ 1434  sudo vim ./run.sh 
+ 1435  sudo ./run.sh 
+ 1436  sudo vim ./run.sh 
+ 1437  sudo ./run.sh 
+ 1438  sudo vim ./run.sh 
+ 1439  sudo ./run.sh 
+ 1440  ssh nasm@localhost -p 2222
+ 1441  cd kAFL/
+ 1442  make env
+ 1443  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1444  ssh nasm@localhost -p 2222
+ 1445  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1446  ssh nasm@localhost -p 2222
+ 1447  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1448  ssh nasm@localhost -pdf -H
+ 1449  sudo find / -type f -printf '%s %p\n' 2>/dev/null | sort -nr | head -n 20
+ 1450  sudo rm /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.vdi
+ 1451  df -h
+ 1452  cd vbox_fuzzing/
+ 1453  ls
+ 1454  cd linux
+ 1455  cd /dev/shm/kafl_root/
+ 1456  ls
+ 1457  cat qemu_trace_00.log 
+ 1458  cd ../
+ 1459  cd kafl_root/
+ 1460  tail -f qemu_trace_00.log 
+ 1461  tail -f hprintf_00.log 
+ 1462  sudo dnesg -w
+ 1463  sudo dmesg -w
+ 1464  tail -f qemu_trace_00.log 
+ 1465  cat qemu_trace_00.log 
+ 1466  cd ../kafl_root/
+ 1467  cat qemu_trace_00.log 
+ 1468  cat hprintf_00.log 
+ 1469  cd ../kafl_root/
+ 1470  cd
+ 1471  cd vbox_fuzzing/
+ 1472  cd gen_L1/
+ 1473  cat run.sh 
+ 1474  cat ../kafl.yaml 
+ 1475  vim run.sh 
+ 1476  ssh nasm@localhost -p 2222
+ 1477  cd
+ 1478  cd /dev/shm/kafl_root/
+ 1479  cat qemu_trace_00.log 
+ 1480  cat hprintf_00.log 
+ 1481  ssh nasm@localhost -p 2222
+ 1482  cd
+ 1483  cd /dev/shm/kafl_root/
+ 1484  ll
+ 1485  date
+ 1486  cat qemu_trace_00.log 
+ 1487  cat hprintf_00.log 
+ 1488  cat qemu_trace_00.log 
+ 1489  cat hprintf_00.log 
+ 1490  sudo dmesg -w
+ 1491  cat hprintf_00.log 
+ 1492  cd ../kafl_root/
+ 1493  cat hprintf_00.log 
+ 1494  ll
+ 1495  cat serial_00.log 
+ 1496  ll
+ 1497  cat kafl_fuzzer.log
+ 1498  cat qemu_trace_00.log
+ 1499  cd ../kafl_root/
+ 1500  tail -f serial_00.log 
+ 1501  cat qemu_trace_00.log 
+ 1502  car hpcd
+ 1503  cd vbo
+ 1504  cd 
+ 1505  cd vbox_fuzzing/
+ 1506  cd gen_L1/
+ 1507  cat run.sh 
+ 1508  vim run.sh 
+ 1509  cd
+ 1510  cd /dev/shm/kafl_root/
+ 1511  cat hprintf_00.log 
+ 1512  ssh nasm@localhost -p 2222
+ 1513  cat hprintf_00.log 
+ 1514  cat qemu_trace_00.log 
+ 1515  cat serial_00.log 
+ 1516  cd ../kafl_root/
+ 1517  cat serial_00.log 
+ 1518  clear
+ 1519  cat serial_00.log 
+ 1520  cd ../kafl_root/
+ 1521  cat serial_00.log 
+ 1522  ll
+ 1523  date
+ 1524  cat qemu_trace_00.log 
+ 1525  cd ../kafl_root/
+ 1526  cat serial_00.log 
+ 1527  cat hr
+ 1528  cat hprintf_00.log 
+ 1529  ll
+ 1530  cat qemu_trace_00.log 
+ 1531  cat kafl_
+ 1532  cat kafl_fuzzer.log 
+ 1533  cd ../kafl_root/
+ 1534  tail -f serial_00.log 
+ 1535  cat eri
+ 1536  cat serial_00.log 
+ 1537  ssh nasm@localhost -p 2222
+ 1538  cat serial_00.log 
+ 1539  cat hpr
+ 1540  cat serial_00.log 
+ 1541  ssh nasm@localhost -p 2222
+ 1542  cat qemu_trace_00.log 
+ 1543  ll
+ 1544  cat kafl_
+ 1545  cat kafl_fuzzer.log 
+ 1546  cat serial_00.log 
+ 1547  ssh nasm@localhost -p 2222
+ 1548  cat serial_00.log 
+ 1549  cd
+ 1550  cd vbox_fuzzing/gen_L1/
+ 1551  cat run.sh 
+ 1552  vim run.sh 
+ 1553  cd /dev/shm/kafl_root/
+ 1554  cat serial_00.log 
+ 1555  ssh nasm@localhost -p 2222
+ 1556  cd kAFL/
+ 1557  make env
+ 1558  cd
+ 1559  cd vbox_fuzzing/
+ 1560  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1561  ssh nasm@localhost -p 2222
+ 1562  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1563  ssh nasm@localhost -p 2222
+ 1564  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1565  ssh nasm@localhost -p 2222
+ 1566  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1567  cat kafl.yaml 
+ 1568  ssh nasm@localhost -p 2222
+ 1569  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1570  ssh nasm@localhost -p 2222
+ 1571  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1572  vim kafl.yaml 
+ 1573  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1574  ssh nasm@localhost -p 2222
+ 1575  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1576  cd
+ 1577  cd vbox_fuzzing/
+ 1578  kafl gui 2>/dev/null
+ 1579  cd /dev/shm/kafl_root/
+ 1580  cat serial_00.log 
+ 1581  ls
+ 1582  ll
+ 1583  cat serial_00.log 
+ 1584  cd ../kafl_root/
+ 1585  cat serial_00.log 
+ 1586  cat qemu_trace_00.log 
+ 1587  ls
+ 1588  id
+ 1589  clear
+ 1590  cd
+ 1591  ssh nasm@localhost -p 2222
+ 1592  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1593  ssh nasm@localhost -p 2222
+ 1594  cd vbox_fuzzing/
+ 1595  ls
+ 1596  exi
+ 1597  exit
+ 1598  cd
+ 1599  kafl gui 2>/dev/null
+ 1600  ls
+ 1601  kafl cd vbox_fuzzing/gui 2>/dev/null
+ 1602  clear
+ 1603  cd vbox_fuzzing/
+ 1604  AFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --loistory | gui
+ 1605  exit
+ 1606  cat /dev/shm/kafl_root/serial_00.log 
+ 1607  cd
+ 1608  cd kAFL/
+ 1609  make env
+ 1610  exit
+ 1611  cd /dev/shm/kafl_root/
+ 1612  cd
+ 1613  cd kAFL/
+ 1614  make env
+ 1615  cd
+ 1616  cd vbox_fuzzing/
+ 1617  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1618  sudo reboot
+ 1619  ps aux | grep qemu
+ 1620  cat /dev/shm/kafl_root/hprintf_00.log 
+ 1621  cat /dev/shm/kafl_root/qemu_trace_00.log 
+ 1622  cat /dev/shm/kafl_root/kafl_fuzzer.log 
+ 1623  cd vbox_fuzzing/gen_L1/
+ 1624  sudo ./run.sh 
+ 1625  cd kAFL/
+ 1626  make env
+ 1627  cd kAFL/
+ 1628  make env
+ 1629  cd
+ 1630  cd vbox_fuzzing/
+ 1631  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1632  ls
+ 1633  top
+ 1634  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1635  clear
+ 1636  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1637  ssh nasm@localhost -p 2222
+ 1638  cd vbox_fuzzing/gen_L1/
+ 1639  sudo ./run.sh 
+ 1640  cd kAFL/
+ 1641  make env
+ 1642  cd
+ 1643  cd vbox_fuzzing/
+ 1644  ls
+ 1645  kafl gui 2>/dev/null
+ 1646  qq
+ 1647  ps aux
+ 1648  ssh nasm@localhost -p 2222
+ 1649  kafl gui 2>/dev/null
+ 1650  cd /dev/shm/kafl_root/
+ 1651  l
+ 1652  cat serial_00.log 
+ 1653  ls
+ 1654  cat hprintf_00.log 
+ 1655  cat qemu_trace_00.log 
+ 1656  cd ../kafl_root/
+ 1657  ls
+ 1658  cat qemu_trace_00.log 
+ 1659  ssh nasm@localhost -p 2222
+ 1660  cd
+ 1661  cd kAFL/
+ 1662  make env
+ 1663  cd
+ 1664  cd vbox_fuzzing/
+ 1665  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1666  ssh nasm@localhost -p 2222
+ 1667  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1668  ssh nasm@localhost -p 2222
+ 1669  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1670  ssh nasm@localhost -p 2222
+ 1671  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1672  df -H
+ 1673  ssh nasm@localhost -p 2222
+ 1674  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1675  ssh nasm@localhost -p 2222
+ 1676  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1677  df 0H
+ 1678  df -H
+ 1679  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1680  df -H
+ 1681  ssh nasm@localhost -p 2222
+ 1682  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1683  cd vbox_fuzzing/
+ 1684  cd
+ 1685  cd kAFL/
+ 1686  make env
+ 1687  cd
+ 1688  cd vbox_fuzzing/
+ 1689  kafl gui 2>/dev/null
+ 1690  cd
+ 1691  cd /dev/shm/kafl_root/
+ 1692  xxd hprintf_00.log 
+ 1693  rm hprintf_00.log 
+ 1694  xxd hprintf_00.log 
+ 1695  cd ../kafl_root/
+ 1696  xxd hprintf_00.log 
+ 1697  tail -f hpr
+ 1698  tail -f hprintf_00.log 
+ 1699  ls
+ 1700  cd ../kafl_root/
+ 1701  ls
+ 1702  tail -f hprintf_00.log 
+ 1703  cat hprintf_00.log 
+ 1704  tail -f hprintf_00.log 
+ 1705  cd ../kafl_root/
+ 1706  cat hprintf_00.log 
+ 1707  tail -f hprintf_00.log 
+ 1708  xxd hprintf_00.log 
+ 1709  ls -la
+ 1710  xxd hprintf_00.log 
+ 1711  ps aux | grep qemu
+ 1712  cd vbox_fuzzing/gen_L1/
+ 1713  sudo ./run.sh 
+ 1714  ps aux | grep qemu
+ 1715  sudo ./run.sh 
+ 1716  cd /dev/shm/kafl_root/
+ 1717  ls
+ 1718  cat hprintf_00.log 
+ 1719  clear
+ 1720  xxd hprintf_00.log 
+ 1721  cd ../kafl_root/
+ 1722  xxd hprintf_00.log 
+ 1723  cd
+ 1724  cd kAFL/
+ 1725  cd kafl/qemu/
+ 1726  ls
+ 1727  vim nyx/nested_hypercalls.c 
+ 1728  cd /dev/shm/kafl_root/
+ 1729  cat qemu_trace_00.log 
+ 1730  xxd qemu_trace_00.log 
+ 1731  cd -
+ 1732  xxd qemu_trace_00.log 
+ 1733  xxd hprintf_00.log 
+ 1734  cdcd
+ 1735  cd
+ 1736  cd kAFL/
+ 1737  make env
+ 1738  cd 
+ 1739  cd vbox_fuzzing/
+ 1740  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1741  kafl gui 2>/dev/null
+ 1742  cd /dev/shm/kafl_root/
+ 1743  cat corpus/regular/payload_000*
+ 1744  xxd corpus/regular/payload_000*
+ 1745  xxd corpus/regular/payload_0001
+ 1746  xxd corpus/regular/payload_00010
+ 1747  cd ../kafl_root/
+ 1748  clear
+ 1749  cd
+ 1750  cd vbox_fuzzing/
+ 1751  kafl gui 2>/dev/null
+ 1752  ssh nasm@localhost -p 2222
+ 1753  clear
+ 1754  sudo sysctl -w kernel.panic=1
+ 1755  kafl gui 2>/dev/null
+ 1756  sudo dmesg 
+ 1757  kafl gui 2>/dev/null
+ 1758  cd fuzz_MmioRead/
+ 1759  ls
+ 1760  cd workdir/
+ 1761  ls
+ 1762  ll
+ 1763  date
+ 1764  cd ../sharedir/
+ 1765  ll
+ 1766  date
+ 1767  df -H
+ 1768  cd vbox_fuzzing/
+ 1769  ssh nasm@localhost -p 2222
+ 1770  c
+ 1771  cd
+ 1772  cd vbox_fuzzing/build_kernel/kafl.linux/arch/x86/kvm/vmx/
+ 1773  vim nested.
+ 1774  vim nested.c 
+ 1775  cd 
+ 1776  cd kAFL/kafl/qemu/nyx/
+ 1777  vim nested_hypercalls.c 
+ 1778  cd
+ 1779  cd kAFL/
+ 1780  make env
+ 1781  cd
+ 1782  cd vbox_fuzzing/
+ 1783  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1784  ssh nasm@localhost -p 2222
+ 1785  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1786  ssh nasm@localhost -p 2222
+ 1787  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1788  ssh nasm@localhost -p 2222
+ 1789  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1790  ssh nasm@localhost -p 2222
+ 1791  clear
+ 1792  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1793  clear
+ 1794  ssh nasm@localhost -p 2222
+ 1795  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1796  clear
+ 1797  ls
+ 1798  vim kafl.yaml 
+ 1799  ls workdir/
+ 1800  cp -rf /dev/shm/kafl_root/* workdir/
+ 1801  clear
+ 1802  vim kafl.yaml 
+ 1803  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1804  clear
+ 1805  vim kafl.yaml 
+ 1806  KAFL_LOG_HRPINTF=TRUE kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --debug --purge --log-hprintf --log
+ 1807  history
+ 1808  history > /tmp/out
+ 1809  vim /tmp/out 
+ 1810  kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2
+ 1811  vim kafl.
+ 1812  vim kafl.yaml 
+ 1813  kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2
+ 1814  kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1815  vim kafl.
+ 1816  vim kafl.yaml 
+ 1817  vim kafl.
+ 1818  mkdir fuzz_MmioRead
+ 1819  cd fuzz_MmioRead/
+ 1820  mv ../workdir/ .
+ 1821  ls
+ 1822  cp ../kafl.yaml .
+ 1823  clear
+ 1824  vim kafl.yaml 
+ 1825  kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1826  ls workdir/
+ 1827  vim kafl.yaml 
+ 1828  clear
+ 1829  ls
+ 1830  mkdir sharedir
+ 1831  kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1832  vim kafl.yaml 
+ 1833  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1834  vim kafl.yaml 
+ 1835  kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1836  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1837  vim kafl.yaml 
+ 1838  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1839  vim kafl.yaml 
+ 1840  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1841  vim kafl.yaml 
+ 1842  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1843  vim kafl.yaml 
+ 1844  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1845  vim kafl.yaml 
+ 1846  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1847  vim kafl.yaml 
+ 1848  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume
+ 1849  vim kafl.yaml 
+ 1850  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1851  vim kafl.yaml 
+ 1852  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1853  clear
+ 1854  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1855  vim kafl.yaml 
+ 1856  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1857  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf\
+ 1858  clear
+ 1859  ls
+ 1860  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf\
+ 1861  cd vbox_fuzzing/
+ 1862  cd gen_L1/
+ 1863  sudo ./run.sh 
+ 1864  cd /dev/shm/kafl_root/
+ 1865  cd corpus/timeout/
+ 1866  ls
+ 1867  cat payload_00019 
+ 1868  xxd payload_00019 
+ 1869  cd
+ 1870  cd vbox_fuzzing/fuzz_MmioRead/
+ 1871  ls
+ 1872  cd sharedir/
+ 1873  ls
+ 1874  l
+ 1875  cd ../
+ 1876  cd workdir/
+ 1877  ls
+ 1878  ll
+ 1879  date
+ 1880  cd /dev/shm/kafl_root/
+ 1881  cd corpus/
+ 1882  ls
+ 1883  cd regular/
+ 1884  cat *
+ 1885  cler
+ 1886  xxd payload_000*
+ 1887  xxd payload_000\*
+ 1888  ssh nasm@localhost -p 2222
+ 1889  cd vbox_fuzzing/build_kernel/kafl.linux/arch/x86/kvm/vmx/
+ 1890  vim nested.c 
+ 1891  cd ../
+ 1892  grep -ri handle_mmio
+ 1893  grep -ri emulate_mmio
+ 1894  grep -ri emulate_mmio .
+ 1895  grep -ri handle_mmio .
+ 1896  cd vmx/
+ 1897  grep -ri nested_ .
+ 1898  vim nested_vmx_vmexit
+ 1899  grep -ri nested_vmx_vmexit .
+ 1900  vim nested.c 
+ 1901  cd vbox_fuzzing/
+ 1902  make run_harness 
+ 1903  clear
+ 1904  clearcd
+ 1905  cd
+ 1906  cd kAFL/
+ 1907  make env
+ 1908  cd
+ 1909  cd vbox_fuzzing/fuzz_MmioRead/
+ 1910  kafl gui 2>/dev/null
+ 1911  ssh nasm@localhost -p 2222
+ 1912  clear
+ 1913  kafl gui 2>/dev/null
+ 1914  ssh nasm@localhost -p 2222
+ 1915  cd
+ 1916  cd vbox_fuzzing/fuzz_MmioRead/
+ 1917  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf\
+ 1918  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1919  sudo pkill qemu
+ 1920  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1921  history > /tmp/out
+ 1922  vim /tmp/out 
+ 1923  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1924  ps ux
+ 1925  ps aux
+ 1926  lsof
+ 1927  sudo lsof
+ 1928  ps aux
+ 1929  sudo reboot
+ 1930  ssh nasm@localhost -p 2222
+ 1931  cd kAFL/
+ 1932  make env
+ 1933  cd
+ 1934  cd vbox_fuzzing/
+ 1935  ls
+ 1936  cd fuzz_MmioRead/
+ 1937  kafl gui 2>/dev/null
+ 1938  cd kAFL/
+ 1939  make env
+ 1940  cd
+ 1941  cd vbox_fuzzing/fuzz_MmioRead/
+ 1942  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1943  ssh nasm@localhost -p 2222
+ 1944  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1945  clear
+ 1946  ssh nasm@localhost -p 2222
+ 1947  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1948  ssh nasm@localhost -p 2222
+ 1949  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1950  ssh nasm@localhost -p 2222
+ 1951  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1952  ssh nasm@localhost -p 2222
+ 1953  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1954  ssh nasm@localhost -p 2222
+ 1955  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1956  ssh nasm@localhost -p 2222
+ 1957  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1958  ssh nasm@localhost -p 2222
+ 1959  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1960  ssh nasm@localhost -p 2222
+ 1961  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1962  ssh nasm@localhost -p 2222
+ 1963  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1964  clear
+ 1965  ssh nasm@localhost -p 2222
+ 1966  cd vbox_fuzzing/fuzz_MmioRead/
+ 1967  ;s
+ 1968  ls
+ 1969  cd workdir/
+ 1970  ls
+ 1971  cd corpus/timeout/
+ 1972  ls
+ 1973  xxd payload_00019 
+ 1974  cd vbox_fuzzing/gen_L1/
+ 1975  sudo ./run.sh 
+ 1976  cd vbox_fuzzing/gen_L1/
+ 1977  sudo ./run.sh 
+ 1978  clear
+ 1979  sudo ./run.sh 
+ 1980  clear
+ 1981  ssh nasm@localhost -p 2222
+ 1982  clear
+ 1983  d kAFL/
+ 1984  cd kAFL/
+ 1985  make env
+ 1986  cd
+ 1987  cd vbox_fuzzing/
+ 1988  cd fuzz_MmioRead/
+ 1989  KAFL_CONFIG_FILE=kafl.yaml kafl fuzz --image /home/nasm/vbox_fuzzing/gen_L1/ubuntu-server.qcow2 --resume --log-hprintf
+ 1990  ssh nasm@localhost -p 2222
+ 1991  clear
+ 1992  cd kAFL/kafl/qemu/nyx/
+ 1993  vim hypercall/
+ 1994  ssh nasm@localhost -p 2222
+ 1995  clear
+ 1996  cd kAFL/
+ 1997  make env
+ 1998  exit
+ 1999  cd
+ 2000  cd vbox_fuzzing/
+ 2001  cd fuzz_MmioRead/
+ 2002  kafl gui 2>/dev/null
+ 2003  ll sharedir/
+ 2004  ll workdir/
+ 2005  date
+ 2006  cd /dev/shm/kafl_root/
+ 2007  cat corpus/regular/*
+ 2008  clear
+ 2009  cd
+ 2010  cd vbox_fuzzing/
+ 2011  kafl gui 2>/dev/null
+ 2012  cd fuzz_MmioRead/
+ 2013  kafl gui 2>/dev/null
+ 2014  kafl debug     --resume     --action single     --input /dev/shm/kafl_root/corpus/timeout/payload_00003
+ 2015  sudo pkill qemu
+ 2016  kafl debug     --resume     --action single     --input /dev/shm/kafl_root/corpus/timeout/payload_00003
+ 2017  clear
+ 2018  history > out

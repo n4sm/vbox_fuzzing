@@ -1,0 +1,261 @@
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 0544700ca..b0899bbb3 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -5523,6 +5523,8 @@ static void init_kvm_nested_mmu(struct kvm_vcpu *vcpu,
+ 	 * nested page tables as the second level of translation. Basically
+ 	 * the gva_to_gpa functions between mmu and nested_mmu are swapped.
+ 	 */
++
++	printk("paging64_gva_to_gpa: %px\n", paging64_gva_to_gpa);
+ 	if (!is_paging(vcpu))
+ 		g_context->gva_to_gpa = nonpaging_gva_to_gpa;
+ 	else if (is_long_mode(vcpu))
+diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
+index 95735843e..869c0e6db 100644
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -433,6 +433,8 @@ static void nested_ept_inject_page_fault(struct kvm_vcpu *vcpu,
+ 					   fault->address);
+ 	}
+ 
++
++	//printk("fault address maybe mmio??: %llx\n", fault->address);
+ 	nested_vmx_vmexit(vcpu, vm_exit_reason, 0, exit_qualification);
+ 	vmcs12->guest_physical_address = fault->address;
+ }
+@@ -2627,9 +2629,9 @@ static int prepare_vmcs02(struct kvm_vcpu *vcpu, struct vmcs12 *vmcs12,
+ 
+ 	nested_vmx_transition_tlb_flush(vcpu, vmcs12, true);
+ 
+-	if (nested_cpu_has_ept(vmcs12))
++	if (nested_cpu_has_ept(vmcs12)){
+ 		nested_ept_init_mmu_context(vcpu);
+-
++	}
+ 	/*
+ 	 * Override the CR0/CR4 read shadows after setting the effective guest
+ 	 * CR0/CR4.  The common helpers also set the shadows, but they don't
+@@ -6267,63 +6269,114 @@ static bool nested_vmx_l0_wants_exit(struct kvm_vcpu *vcpu,
+ }
+ 
+ #ifdef CONFIG_KVM_NYX
++
+ u64 g2va_to_g1pa(struct kvm_vcpu *vcpu, struct vmcs12* vmcs12, u64 addr){
+ 
+ 	u64 gfn = 0;
+ 	u64 real_gfn = 0;
+ 
++	//printk("gfp walking mmu: %llx\n", vcpu->arch.walk_mmu->gva_to_gpa(vcpu, &vcpu->arch.nested_mmu, addr, 0, NULL) >> 12);
+ 	/* Guest Level 1 VMM is not using EPT and no virtual memory */
+-	if(!nested_cpu_has_ept(vmcs12)){
+-		//printk("Non-EPT-Mode\n");
++	/*if(!nested_cpu_has_ept(vmcs12)){
+ 		gfn = vcpu->arch.mmu->gva_to_gpa(vcpu, vcpu->arch.mmu, addr, 0, NULL) >> 12;
+-	}
++		printk("Non-EPT-Mode\n");
++	}*/
+ 
+ 	/* Guest Level 1 VMM *is* using EPT and no virtual memory */
+-	else {
+-		//printk("EPT-Mode\n");
++	/*else {
++		printk("EPT-Mode\n");
+ 		gfn = addr >> 12;
+-	}
++	}*/
++
++	//kvm_mmu_reset_context(vcpu);
++	//nested_ept_init_mmu_context(vcpu);
+ 
++	//printk("is nested: %d\n", mmu_is_nested(vcpu));
++	//printk("is guest mode: %d\n", is_guest_mode(vcpu));
++
++	//gfn = addr >> 12;
++	
++	//printk("nested mmu %lx\n", vcpu->arch.nested_mmu.gva_to_gpa);
++	//printk("walkmmu %lx\n", vcpu->arch.walk_mmu->gva_to_gpa);
++	//printk("guest mmu %lx\n", vcpu->arch.guest_mmu.gva_to_gpa);
++	//printk("mmu %lx\n", vcpu->arch.mmu->gva_to_gpa);
+ 	//u8 data[8];
++	//printk("First layer gfn: %llx\n", gfn);
+ 	//r = kvm_read_guest_page_mmu(vcpu, vcpu->arch.walk_mmu, gfn, data, 0, 8, 0);
+ 	//printk("Data:\t%lx\t%x %x %x %x (Status: %lx)\n", guest_level_2_data_addr, data[0], data[1], data[2], data[3], r);
+-	real_gfn = (u64)kvm_translate_gpa(vcpu, vcpu->arch.mmu, ((u64)gfn) << 12, 0, NULL);
++
++	/*struct kvm_mmu *saved = vcpu->arch.mmu;
++	*/
++
++
++	//printk("Checking the EPT availability: %d\n", nested_check_vm_execution_controls(vcpu, vmcs12));
++
++	struct x86_exception exception;
++	//real_gfn = (u64)kvm_translate_gpa(vcpu, &vcpu->arch.nested_mmu, ((u64)gfn) << 12, 0, &exception);
++	//real_gfn = (u64)kvm_translate_gpa(vcpu, &vcpu->arch.nested_mmu, ((u64)gfn) << 12, 0, &exception);
++
++	//nested_vmx_transition_tlb_flush(vcpu, vmcs12, false);
++	//real_gfn = kvm_translate_gpa(vcpu, vcpu->arch.mmu, addr, PFERR_USER_MASK | PFERR_WRITE_MASK, &exception);
++	real_gfn = vcpu->arch.mmu->gva_to_gpa(vcpu, vcpu->arch.mmu, addr, PFERR_USER_MASK | PFERR_WRITE_MASK, &exception);
++	
++	if (real_gfn == INVALID_GPA) real_gfn = kvm_translate_gpa(vcpu, vcpu->arch.mmu, addr, PFERR_USER_MASK | PFERR_WRITE_MASK, &exception);
++	printk("l2pa: %llx => l1pa: %llx\n", addr, real_gfn);
++
++	//vcpu->arch.mmu = saved;
+ 
+ 	return real_gfn;
+ }
+ 
+ void prepare_nested(struct kvm_vcpu *vcpu, struct vmcs12* vmcs12){
+ 	u64 guest_level_2_data_addr = kvm_register_read(vcpu, VCPU_REGS_RCX) & 0xFFFFFFFFFFFFFFFF;
+-	//printk(KERN_EMERG "HyperCall from Guest Level 2! RIP: %lx (created_vcpus: %x): %llx\n", kvm_register_read(vcpu, VCPU_REGS_RIP), vcpu->kvm->last_boosted_vcpu, guest_level_2_data_addr);
++	printk(KERN_EMERG "HyperCall from Guest Level 2! RIP: %lx (created_vcpus: %x): %llx\n", kvm_register_read(vcpu, VCPU_REGS_RIP), vcpu->kvm->last_boosted_vcpu, guest_level_2_data_addr);
+ 	
+ 	u64 address = guest_level_2_data_addr & 0xFFFFFFFFFFFFF000ULL;
+ 	u16 num = guest_level_2_data_addr & 0xFFF;
+ 	u16 i = 0;
+ 
+-	u64 old_address;
+-	u64 new_address;
++	u64 old_address = 0;
++	u64 new_address = 0;
+ 
+-	//printk("ADDRESS: %lx (num: %d)\n", address, num);
++	//printk("ADDRESS: %llx (num: %d)\n", address, num);
+ 	u64 page_address_gfn = g2va_to_g1pa(vcpu, vmcs12, address) >> 12;
+-
++	//printk("page_address_gfn: %llx\n", page_address_gfn);
+ 
+ 	for(i = 0; i < num; i++){
+ 		kvm_vcpu_read_guest_page(vcpu, page_address_gfn,  &old_address, (i*0x8), 8);
+-		//printk("READ -> %lx\n", old_address);
++		printk("READ -> %llx\n", old_address);
+ 		new_address = g2va_to_g1pa(vcpu, vmcs12, old_address);
+ 		kvm_vcpu_write_guest_page(vcpu, page_address_gfn,  &new_address, (i*0x8), 8);
+-		//printk("%d: %lx -> %lx\n", i, old_address, new_address);
++		printk("%d: %llx -> %llx\n", i, old_address, new_address);
+ 	}
+-	
++/*	
++	u64* buf = kmalloc(0x1000, GFP_KERNEL);
++	memset(buf, 0xac, 0x1000);
++	kvm_vcpu_write_guest_page(vcpu, page_address_gfn,  buf, 0, 0x1000);
++*/	
+ 	vcpu->run->exit_reason = KVM_EXIT_KAFL_NESTED_PREPARE;
+ 	//vcpu->run->hypercall.args[0] = 0;
+-	
+-	vcpu->run->hypercall.args[0] = num;
+-	vcpu->run->hypercall.args[1] = page_address_gfn << 12; 
++	vcpu->run->hypercall.args[0] = num; // should be num!!!!!!
++	vcpu->run->hypercall.args[1] = (page_address_gfn) << 12; 
+ 	vcpu->run->hypercall.args[2] = vmcs12->host_cr3 & 0xFFFFFFFFFFFFF000;
+ }
++
++u64 handle_hprintf(struct kvm_vcpu* vcpu) {
++	u64 hprintf_buffer_addr = kvm_register_read(vcpu, VCPU_REGS_RCX) & 0xFFFFFFFFFFFFFFFF;
++	struct vmcs12 *vmcs12 = get_vmcs12(vcpu);
++	
++	printk("hprintf request, buf: %llx\n", hprintf_buffer_addr);
++
++	u64 l1_pa = g2va_to_g1pa(vcpu, vmcs12, hprintf_buffer_addr);
++
++	return l1_pa;
++}
++
+ #endif
+ 
++
++u64 handle_hprintf(struct kvm_vcpu* vcpu);
++
+ /*
+  * Return 1 if L1 wants to intercept an exit from L2.  Only call this when in
+  * is_guest_mode (L2).
+@@ -6400,8 +6453,9 @@ static bool nested_vmx_l1_wants_exit(struct kvm_vcpu *vcpu,
+ 
+ 				case HYPERCALL_KAFL_NESTED_HPRINTF:
+ 					vcpu->run->exit_reason = KVM_EXIT_KAFL_NESTED_HPRINTF;
++					vcpu->run->hypercall.args[0] = handle_hprintf(vcpu);
+ 					//printk("HYPERCALL_KAFL_NESTED_HPRINTF %lx %llx\n", kvm_register_read(vcpu, VCPU_REGS_RCX), g2va_to_g1pa(vcpu, vmcs12, (kvm_register_read(vcpu, VCPU_REGS_RCX) & 0xFFFFFFFFFFFFF000)));
+-					vcpu->run->hypercall.args[0] = (g2va_to_g1pa(vcpu, vmcs12, (kvm_register_read(vcpu, VCPU_REGS_RCX) & 0xFFFFFFFFFFFFF000)));// << 12) & (kvm_register_read(vcpu, VCPU_REGS_RCX)&0xFFF);
++					//vcpu->run->hypercall.args[0] = (g2va_to_g1pa(vcpu, vmcs12, (kvm_register_read(vcpu, VCPU_REGS_RCX) & 0xFFFFFFFFFFFFF000)));// << 12) & (kvm_register_read(vcpu, VCPU_REGS_RCX)&0xFFF);
+ 					break;
+ 
+ 				case HYPERCALL_KAFL_NESTED_EARLY_RELEASE:
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index cd6cf4b10..556d55b92 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -7147,25 +7147,35 @@ int kvm_arch_vm_ioctl(struct file *filp, unsigned int ioctl, unsigned long arg)
+ 	}
+ 	case KVM_GET_PIT2: {
+ 		r = -ENXIO;
+-		if (!kvm->arch.vpit)
+-			goto out;
++		if (!kvm->arch.vpit) {
++                        printk("!kvm->arch.vpit\n");
++                        goto set_pit2_out;
++                }
++
+ 		r = kvm_vm_ioctl_get_pit2(kvm, &u.ps2);
+ 		if (r)
+ 			goto out;
+ 		r = -EFAULT;
+-		if (copy_to_user(argp, &u.ps2, sizeof(u.ps2)))
+-			goto out;
++		if (copy_to_user(argp, &u.ps2, sizeof(u.ps2))) {
++                        printk("Failed copy_to_user\n");
++                        goto out;
++                }
++
+ 		r = 0;
+ 		break;
+ 	}
+ 	case KVM_SET_PIT2: {
+ 		r = -EFAULT;
+-		if (copy_from_user(&u.ps2, argp, sizeof(u.ps2)))
++		if (copy_from_user(&u.ps2, argp, sizeof(u.ps2))) {
++			printk("Failed copy_from_user\n");
+ 			goto out;
++		}
+ 		mutex_lock(&kvm->lock);
+ 		r = -ENXIO;
+-		if (!kvm->arch.vpit)
++		if (!kvm->arch.vpit) {
++			printk("!kvm->arch.vpit\n");
+ 			goto set_pit2_out;
++		}
+ 		r = kvm_vm_ioctl_set_pit2(kvm, &u.ps2);
+ set_pit2_out:
+ 		mutex_unlock(&kvm->lock);
+diff --git a/compile_kvm_nyx.sh b/compile_kvm_nyx.sh
+old mode 100644
+new mode 100755
+diff --git a/compile_kvm_nyx_standalone.sh b/compile_kvm_nyx_standalone.sh
+old mode 100644
+new mode 100755
+index fa43607fa..82f82d55c
+--- a/compile_kvm_nyx_standalone.sh
++++ b/compile_kvm_nyx_standalone.sh
+@@ -1,8 +1,9 @@
+-yes | make oldconfig &&
++#yes | make oldconfig &&
+ make modules_prepare &&
+ cp /lib/modules/`uname -r`/build/scripts/module.lds scripts/ &&
+ cp /lib/modules/`uname -r`/build/Module.symvers . &&
+ cp /lib/modules/`uname -r`/build/include/config/kernel.release include/config/kernel.release &&
+ cp /lib/modules/`uname -r`/build/include/generated/utsrelease.h include/generated/utsrelease.h &&
+-make  M=arch/x86/kvm/ -j &&
++make M=arch/x86/kvm/ -j`nproc` &&
++#make -j`nproc` deb-pkg && #M=arch/x86/kvm/ -j`nproc` &&
+ echo "[!] kvm-nyx successfully compiled"
+diff --git a/load_kvm_nyx.sh b/load_kvm_nyx.sh
+old mode 100644
+new mode 100755
+index fb85ffef0..e0fee2bb9
+--- a/load_kvm_nyx.sh
++++ b/load_kvm_nyx.sh
+@@ -1,4 +1,4 @@
+ sudo rmmod kvm_intel kvm
+ sudo insmod arch/x86/kvm/kvm.ko;
+-sudo insmod arch/x86/kvm/kvm-intel.ko;
++sudo insmod arch/x86/kvm/kvm-intel.ko nested=1 ept=1 enable_shadow_vmcs=1 enable_apicv=1 enlightened_vmcs=1;
+ sudo chmod 777 /dev/kvm
