@@ -36,8 +36,26 @@
 /* xHCI runtime registers */
 #define HC_MFINDEX       0x00
 
-/* xHCI doorbell registers */
-#define HC_DOORBELL      0x00
+/** Size of the xHCI memory-mapped I/O region. */
+#define XHCI_MMIO_SIZE              _64K
+
+/** Size of the capability part of the MMIO region.  */
+#define XHCI_CAPS_REG_SIZE          0x80
+
+/** Offset of the port registers in operational register space. */
+#define XHCI_PORT_REG_OFFSET        0x400
+
+/** Offset of xHCI extended capabilities in MMIO region.  */
+#define XHCI_XECP_OFFSET            0x1000
+
+/** Offset of the run-time registers in MMIO region.  */
+#define XHCI_RTREG_OFFSET           0x2000
+
+/** Offset of the doorbell registers in MMIO region.  */
+#define XHCI_DOORBELL_OFFSET        0x3000
+
+/** Size of the extended capability area. */
+#define XHCI_EXT_CAP_SIZE           1024
 
 /* xHCI context structures */
 struct xhci_device_context {
@@ -64,6 +82,10 @@ static struct urb *fuzz_urb;
 static dma_addr_t input_ctx_dma;
 static struct xhci_input_context *input_ctx;
 static xhci_payload_t* payload = NULL;
+
+static struct resource *res = NULL;
+static phys_addr_t phys_addr = 0;
+
 
 static int xhci_fuzzer_probe(struct usb_interface *interface,
                             const struct usb_device_id *id);
@@ -107,6 +129,71 @@ static void xhci_dump_cap_regs(void)
 
 #define MAX_FUZZ_ITERATIONS 15
 #define MIN_FUZZ_ITERATIONS 10
+
+size_t _kafl_fuzz(void* buf, size_t sz);
+
+size_t
+_kafl_fuzz(void* buf, size_t sz)
+{
+	if (!kafl_fuzz_buffer(buf, sz)) {
+		xhci_write32(0x1340, 0x8888);
+	}
+
+	return 0;
+}
+
+void dumb_fuzzing(void);
+
+void
+dumb_fuzzing(void)
+{
+	uint32_t val = 0;
+	//uint32_t n = 0;
+	uint32_t offt = 0;
+
+
+	//_kafl_fuzz(&n, sizeof(uint32_t));
+
+	//kafl_hprintf("Before starting fuzzing\n");
+    	
+	
+	xhci_write32(0x1448, 0x8888); // start fuzzing and acquire
+    	
+	
+	//xhci_write32(0x1348, 0x8888); // start fuzzing and acquire
+	//xhci_read32(offt);
+    	//_kafl_fuzz(&offt, sizeof(uint32_t));
+	//_kafl_fuzz(&val, sizeof(uint32_t));
+
+	//xhci_write32(offt, val == 0x8888 ? val - 1 : val);
+
+	//xhci_write32(0x0, 0x8888); // start fuzzing and acquire
+	//xhci_write32(0x1340, 0x8888); // release 
+	
+	//kAFL_hypercall(HYPERCALL_KAFL_NESTED_ACQUIRE, 0);	
+	int i = 0;
+	//_kafl_fuzz(&offt, sizeof(uint32_t));	
+	//_kafl_fuzz(&val, sizeof(uint32_t));
+	//xhci_write32(offt, val);	
+	//printk(KERN_INFO "test\n");
+	//kafl_hprintf("Before the fuzzing loop\n");
+	/*for (i = 0; i < 10; ++i) {
+		kafl_hprintf("In the fuzzing loop");
+
+		offt = (offt + 3) & ~0x3;
+		
+
+		_kafl_fuzz(&offt, sizeof(uint32_t));	
+		offt = (offt + 3) & ~0x3;
+		
+		
+	}*/
+	
+	//kafl_hprintf("Release\n");
+    	//xhci_write32(0x1340, 0x8888); // release
+	//kAFL_hypercall(HYPERCALL_KAFL_NESTED_EARLY_RELEASE, 0);
+	//xhci_write32(0x1340, 0x8888);// release
+}
 
 enum urb_type {
     URB_BULK,
@@ -205,11 +292,12 @@ void xhci_trigger_complex_failures(void __iomem *base) {
 
     payload = _pre_xhci_fuzz();
 
-    for (int i = 0; i < 30; ++i) {
+    int i = 0;
+    for (i = 0; i < 30; ++i) {
         xhci_write32(payload->target_reg, payload->fuzz_val);
         // mmiowb();
-        (void)xhci_read32(payload->target_reg);
-        _hci_feed(payload);
+        //(void)xhci_read32(payload->target_reg);
+        //_hci_feed(payload);
     }
 
     // // --- 1. Corrupt Command Ring Control Register (CRCR) ---
@@ -253,11 +341,19 @@ void xhci_trigger_complex_failures(void __iomem *base) {
     _post_xhci_fuzz(payload);
 }
 
+#include <linux/pci.h>       // For PCI functions (pci_iomap, pci_resource_start, etc.)
+#include <linux/io.h>        // For I/O memory mapping functions
+
+
 static int __init xhci_fuzzer_init(void)
 {
     // int ret;
     struct pci_dev *pdev = NULL;
-    
+
+    //kafl_hprintf("test123\n");
+    //kafl_agent_init();
+
+    printk(KERN_INFO "After panic\n");
     unbind_xhci_driver();
 
     // Find xHCI controller
@@ -292,7 +388,6 @@ static int __init xhci_fuzzer_init(void)
 
     // Dump capability registers
     xhci_dump_cap_regs();
-    
 
     // struct resource *res = &xhci_pci_dev->resource[0];  // BAR0
     // // void __iomem *xhci_base = xhci_mmio_base;
@@ -311,7 +406,7 @@ static int __init xhci_fuzzer_init(void)
     // // 2. Reset (set USBCMD.HCRST)
     // xhci_write32(HC_USBCMD, 0);
 
-    xhci_trigger_complex_failures(NULL);
+    //xhci_trigger_complex_failures(NULL);
     // while (readl(xhci_base + 0x00) & 0x2)  // Wait for reset
     //     cpu_relax();
 
@@ -346,6 +441,17 @@ static int __init xhci_fuzzer_init(void)
     // perform_fuzzing();
     
     printk(KERN_INFO "xHCI fuzzer module loaded\n");
+
+    /* initial fuzzer handshake */
+    //kAFL_hypercall(HYPERCALL_KAFL_NESTED_ACQUIRE, 0);
+    //kAFL_hypercall(HYPERCALL_KAFL_NESTED_RELEASE, 0);
+
+    //phys_addr = pci_resource_start(pdev, 0);
+
+
+    //kafl_agent_init((uint64_t)phys_addr);
+    
+    dumb_fuzzing();
     return 0;
 }
 

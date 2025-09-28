@@ -13,4 +13,5 @@ test -x /etc/rcS && /etc/rcS
 insmod main.ko
 
 echo "/etc/rcS returned. Fallback to shell."
+
 test -x /bin/ash && /bin/ash || /bin/sh

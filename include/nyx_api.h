@@ -10,8 +10,8 @@
 #ifndef NYX_API_H
 #define NYX_API_H
 
-// #include <stdarg.h>
-// #include <stddef.h>
+//#include <stdarg.h>
+//#include <stddef.h>
 
 #define HYPERCALL_KAFL_RAX_ID				0x01f
 #define HYPERCALL_KAFL_ACQUIRE				0
@@ -60,20 +60,22 @@
 #define HYPERCALL_KAFL_NESTED_CONFIG		(1 | HYPERTRASH_HYPERCALL_MASK)
 #define HYPERCALL_KAFL_NESTED_ACQUIRE		(2 | HYPERTRASH_HYPERCALL_MASK)
 #define HYPERCALL_KAFL_NESTED_RELEASE		(3 | HYPERTRASH_HYPERCALL_MASK)
-#define HYPERCALL_KAFL_NESTED_HPRINTF		(4 | HYPERTRASH_HYPERCALL_MASK)gre
+#define HYPERCALL_KAFL_NESTED_HPRINTF		(4 | HYPERTRASH_HYPERCALL_MASK)
+#define HYPERCALL_KAFL_NESTED_EARLY_RELEASE	(5 | HYPERTRASH_HYPERCALL_MASK)
 
 #define PAYLOAD_MAX_SIZE			        (256 << 10)    /* up to 256KB payloads */
-#define HPRINTF_MAX_SIZE					0x1000         /* up to 4KB hprintf saatrings */
+#define HPRINTF_MAX_SIZE				0x1000         /* up to 4KB hprintf saatrings */
 
-// typedef union {
-// 	struct {PAYLOAD_MAX_SIZE
-// 		unsigned int dump_observed :1;
-// 		unsigned int dump_stats :1;
-// 		unsigned int dump_callers :1;
-// 	};
-// 	uint32_t raw_data;
-// } __attribute__((packed)) agent_flags_t;
-
+/*
+typedef union {
+ 	struct {PAYLOAD_MAX_SIZE
+ 		unsigned int dump_observed :1;
+ 		unsigned int dump_stats :1;
+ 		unsigned int dump_callers :1;
+ 	};
+ 	uint32_t raw_data;
+} __attribute__((packed)) agent_flags_t;
+*/
 typedef struct {
 	int32_t size;
 	uint8_t data[];
@@ -190,6 +192,7 @@ size_t kafl_fuzz_buffer(void* fuzz_buf, const size_t num_bytes);
 
 int kafl_vprintk(const char *fmt, va_list args);
 void kafl_hprintf(const char *fmt, ...) __attribute__ ((unused, format (printf, 1, 2)));
+void kafl_agent_done(void);
 
 #endif /* NYX_API_H */
 
@@ -242,23 +245,18 @@ bool exit_at_eof = true;
 agent_config_t agent_config = {0};
 host_config_t host_config = {0};
 
-char hprintf_buffer[HPRINTF_MAX_SIZE] __attribute__((aligned(4096)));
+uintptr_t hprintf_buffer;
 kafl_dump_file_t dump_file __attribute__((aligned(4096)));
 
 /* kmalloc() may not always be available - e.g. early boot */
 //#define KAFL_ASSUME_KMALLOC
-#ifdef KAFL_ASSUME_KMALLOC
 size_t payload_buffer_size = 0;
-uint8_t *payload_buffer = NULL;
-#else
-size_t payload_buffer_size = PAYLOAD_MAX_SIZE;
-uint8_t payload_buffer[PAYLOAD_MAX_SIZE] __attribute__((aligned(4096)));
-#endif
+uint64_t *payload_buffer = NULL;
 
-u8 *ve_buf;
-u32 ve_num;
-u32 ve_pos;
-u32 ve_mis;
+u8 *ve_buf = NULL;
+u32 ve_num = 0;
+u32 ve_pos = 0;
+u32 ve_mis = 0;
 
 u8 *ob_buf;
 u32 ob_num;
@@ -295,7 +293,7 @@ static void kafl_acquire(void) {
 	kAFL_hypercall(HYPERCALL_KAFL_ACQUIRE, 0);
 }
 
-
+/*
 static void kafl_agent_setrange(int id, void* start, void* end)
 {
 	uintptr_t range[3];
@@ -306,7 +304,7 @@ static void kafl_agent_setrange(int id, void* start, void* end)
 	kafl_hprintf("Setting range %lu: %lx-%lx\n", range[2], range[0], range[1]);
 	kAFL_hypercall(HYPERCALL_KAFL_RANGE_SUBMIT, (uintptr_t)range);
 }
-
+*/
 static void kafl_habort(char *msg)
 {
 	kAFL_hypercall(HYPERCALL_KAFL_USER_ABORT, (uintptr_t)msg);
@@ -327,7 +325,8 @@ void kafl_hprintf(const char *fmt, ...)
 	va_list args;
 	va_start(args, fmt);
 	vsnprintf((char*)hprintf_buffer, HPRINTF_MAX_SIZE, fmt, args);
-	kAFL_hypercall(HYPERCALL_KAFL_PRINTF, (uintptr_t)hprintf_buffer);
+	//kAFL_hypercall(HYPERCALL_KAFL_PRINTF, (uintptr_t)hprintf_buffer);
+	kAFL_hypercall(HYPERCALL_KAFL_NESTED_HPRINTF, (uintptr_t)virt_to_phys(hprintf_buffer));
 	va_end(args);
 }
 
@@ -337,52 +336,83 @@ static void kafl_agent_setcr3(void)
 	kAFL_hypercall(HYPERCALL_KAFL_SUBMIT_CR3, 0);
 }
 
-static void kafl_agent_init(void)
+#include <linux/vmalloc.h>
+#include <linux/mm.h>
+
+static void kafl_agent_init(uint64_t mmio)
 {
-	kAFL_payload *payload = NULL;
+	//kAFL_payload *payload = NULL;
+	int i = 0;
+	uint8_t* payload_target = NULL;
+	
+	hprintf_buffer = (uintptr_t)get_zeroed_page(GFP_KERNEL);
 
 	if (agent_initialized) {
 		kafl_habort("Warning: Agent was already initialized!\n");
 	}
 
 	kafl_hprintf("[*] Initialize kAFL Agent\n");
-
+	
 	/* initial fuzzer handshake */
-	kAFL_hypercall(HYPERCALL_KAFL_ACQUIRE, 0);
-	kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+	//kAFL_hypercall(HYPERCALL_KAFL_NESTED_ACQUIRE, 0);
+	//kAFL_hypercall(HYPERCALL_KAFL_NESTED_RELEASE, 0);
 
-	/* used for code injection and libxdc disassembly */
+
 #if defined(__i386__)
-	kAFL_hypercall(HYPERCALL_KAFL_USER_SUBMIT_MODE, KAFL_MODE_32);
+	//kAFL_hypercall(HYPERCALL_KAFL_USER_SUBMIT_MODE, KAFL_MODE_32);
 #elif defined(__x86_64__)
-	kAFL_hypercall(HYPERCALL_KAFL_USER_SUBMIT_MODE, KAFL_MODE_64);
+	//kAFL_hypercall(HYPERCALL_KAFL_USER_SUBMIT_MODE, KAFL_MODE_64);
 #endif
 
 
-	kAFL_hypercall(HYPERCALL_KAFL_GET_HOST_CONFIG, (uintptr_t)&host_config);
+	/*kAFL_hypercall(HYPERCALL_KAFL_GET_HOST_CONFIG, (uintptr_t)&host_config);
 
 	kafl_hprintf("[host_config] bitmap sizes = <0x%x,0x%x>\n", host_config.bitmap_size, host_config.ijon_bitmap_size);
 	kafl_hprintf("[host_config] payload size = %dKB\n", host_config.payload_buffer_size/1024);
 	kafl_hprintf("[host_config] worker id = %02u\n", host_config.worker_id);
+*/
+	payload_buffer_size = 0x1000;
+	payload_buffer = (uint64_t* )get_zeroed_page(GFP_KERNEL);
+	//memset(payload_buffer, 0xab, 0x1000);
 
-#ifdef KAFL_ASSUME_KMALLOC
-	payload_buffer_size = host_config.payload_buffer_size;
-	payload_buffer = kmalloc(payload_buffer_size, GFP_KERNEL|__GFP_NOFAIL);
+	//struct page *page_buffer = virt_to_page((void *)payload_buffer);
+	//phys_addr_t phys_buffer = page_to_phys(page_buffer);
 
+	payload_target = (uint8_t* )get_zeroed_page(GFP_KERNEL);
+	//memset(payload_target, 0xac, 0x1000);
+
+	for (i = 0; i < 10; ++i) {
+		payload_buffer[i] = (uint64_t)virt_to_phys(payload_target);
+		//payload_buffer[i] = (uint64_t)mmio;
+	}
+	/*
+
+#define ORDER 0  // 2^0 = 1 page (4KB), ORDER=1 → 2 pages (8KB), etc.
+#define PAYLOAD_BUFFER_SIZE 0x1000
+
+	uint64_t* payload_buffer = (uint64_t* )&buffer_phys_ptr;
+	memset(payload_buffer, 0x00, 0x1000);
+	//phys_addr_t phys_buffer = page_to_phys(virt_to_page(payload_buffer));
+
+	uint8_t* payload_target = buffer_payload;
+	memset(payload_target, 0xab, 0x1000);
+	//phys_addr_t phys_target = page_to_phys(virt_to_page(payload_target));
+
+	*(uint64_t*)payload_buffer = (uint64_t)&buffer_payload;
+	
+*/
+	ve_buf = payload_target;
+	ve_num = 0x1000;
 	if (!payload_buffer) {
 		kafl_habort("Failed to allocate host payload buffer!\n");
 	}
-#else
-	if (host_config.payload_buffer_size > PAYLOAD_MAX_SIZE) {
-		kafl_habort("Insufficient payload buffer size!\n");
-	}
-#endif
 
-	/* ensure that the virtual memory is *really* present in physical memory... */
-	memset(payload_buffer, 0xff, payload_buffer_size);
+	//memset(payload_target, 0xff, 0x1000);
+	kAFL_hypercall(HYPERCALL_KAFL_NESTED_PREPARE,( (uint64_t)virt_to_phys(payload_buffer)) | 1);
+	//kAFL_hypercall(HYPERCALL_KAFL_GET_PAYLOAD, (uintptr_t)payload_buffer);
 
-	kafl_hprintf("Submitting payload buffer address to hypervisor (%lx)\n", (uintptr_t)payload_buffer);
-	kAFL_hypercall(HYPERCALL_KAFL_GET_PAYLOAD, (uintptr_t)payload_buffer);
+
+	//for (i = 0; i < 20; ++i) kafl_hprintf("buf: %llx \n", payload_buffer[i]);
 
 	agent_config.agent_magic = NYX_AGENT_MAGIC;
 	agent_config.agent_version = NYX_AGENT_VERSION;
@@ -392,35 +422,31 @@ static void kafl_agent_init(void)
 	agent_config.agent_non_reload_mode = 0;
 	agent_config.trace_buffer_vaddr = 0;
 	agent_config.ijon_trace_buffer_vaddr = 0;
-	//agent_config.coverage_bitmap_size = host_config.bitmap_size;
+	agent_config.coverage_bitmap_size = 0;
 	agent_config.input_buffer_size = 0;
 	agent_config.dump_payloads = 0;
-	kAFL_hypercall(HYPERCALL_KAFL_SET_AGENT_CONFIG, (uintptr_t)&agent_config);
-
+	//kAFL_hypercall(HYPERCALL_KAFL_NESTED_CONFIG, (uintptr_t)&agent_config);
+	
 	// set PT filter ranges based on exported linker map symbols in sections.h
-	kafl_agent_setrange(0, (void* )0xffffffff81000000, (void* )0xffffffff841fcc47);
-	kafl_agent_setrange(1, (void* )0xffffffff85ef6000, (void* )0xffffffff86026a45);
+	//kafl_agent_setrange(0, (void* )0xffffffff81000000, (void* )0xffffffff841fcc47);
+	//kafl_agent_setrange(1, (void* )0xffffffff85ef6000, (void* )0xffffffff86026a45);
 
 	// fetch fuzz input for later #VE injection
 	kafl_hprintf("Starting kAFL loop...\n");
-	kAFL_hypercall(HYPERCALL_KAFL_NEXT_PAYLOAD, 0);
+	//kAFL_hypercall(HYPERCALL_KAFL_NEXT_PAYLOAD, 0);
 
-	payload = (kAFL_payload*)payload_buffer;
-	ve_buf = payload->data;
-	ve_num = payload->size;
-	ve_pos = 0;
-	ve_mis = 0;
-
-    kafl_fuzz_event(KAFL_SETCR3);
-
-	agent_initialized = true;
 
 	// // start coverage tracing
-	kAFL_hypercall(HYPERCALL_KAFL_ACQUIRE, 0); 
+	//kAFL_hypercall(HYPERCALL_KAFL_NESTED_ACQUIRE, 0);
+	agent_initialized = true;
+	
+	//memcpy(hprintf_buffer, payload_target, 0x1000);
+
+	//kAFL_hypercall(HYPERCALL_KAFL_NESTED_EARLY_RELEASE, 0);
 }
 
 
-static void kafl_agent_done(void)
+void kafl_agent_done(void)
 {
 	if (!agent_initialized) {
 		kafl_habort("Attempt to finish kAFL run but never initialized\n");
@@ -428,22 +454,28 @@ static void kafl_agent_done(void)
 
 	// Stops tracing and restore the snapshot for next round
 	// Non-zero argument triggers stream_expand mutation in kAFL
-	kAFL_hypercall(HYPERCALL_KAFL_RELEASE, ve_mis*sizeof(ve_buf[0]));
+	//kAFL_hypercall(HYPERCALL_KAFL_NESTED_EARLY_RELEASE, ve_mis*sizeof(ve_buf[0]));
+	//kAFL_hypercall(HYPERCALL_KAFL_NESTED_EARLY_RELEASE, ve_mis*sizeof(ve_buf[0]));
 }
 
 static size_t _kafl_fuzz_buffer(void *buf, size_t num_bytes)
 {
+	int i = 0;
+
+	//kafl_hprintf("\nPayload buffer: %llx ", ((uint8_t *)ve_buf) + ve_pos);
+	for (i = 0; i < num_bytes; ++i) {
+		//kafl_hprintf(" 0%x ", *(((uint8_t *)ve_buf) + ve_pos + i));
+	}
+	//kafl_hprintf("\n");
+
+	//kafl_hprintf("Asking for %lx bytes: %llx", num_bytes, buf);
 	if (ve_pos + num_bytes <= ve_num) {
 		memcpy(buf, ve_buf + ve_pos, num_bytes);
 		ve_pos += num_bytes;
 		return num_bytes;
 	}
-
 	// insufficient fuzz buffer!
 	ve_mis += num_bytes;
-	if (exit_at_eof) {
-		kafl_agent_done(); /* no return */
-	}
 	return 0;
 }
 
@@ -463,20 +495,21 @@ size_t kafl_fuzz_buffer(void* fuzz_buf, const size_t num_bytes)
 	 * input, the fuzzer frontend will wait forever on this..
 	 */
 	if (!agent_initialized) {
-		kafl_agent_init();
+		kafl_agent_init(0);
 	}
 
 	num_fuzzed = _kafl_fuzz_buffer(fuzz_buf, num_bytes);
 
+	//printk(KERN_INFO "fuzz: %x\n", *(uint32_t* )fuzz_buf);
 	return num_fuzzed;
 }
 EXPORT_SYMBOL(kafl_fuzz_buffer);
 
 xhci_payload_t* _pre_xhci_fuzz(void)
 {
-    // if (!agent_initialized) {
-    //     kafl_agent_init();
-    // } It's better to initialize the agent when the kafl_fuzz_buffer occurs for the firs time 
+    if (!agent_initialized) {
+         kafl_agent_init(0);
+    }
 
     xhci_payload_t* payload = kmalloc(sizeof(xhci_payload_t), GFP_KERNEL | __GFP_NOFAIL);
     // payload->kopt = kmalloc(PAYLOAD_SCTP_SIZE, GFP_KERNEL | __GFP_NOFAIL);
@@ -556,7 +589,7 @@ void kafl_fuzz_event(enum kafl_event e)
 	switch (e) {
 		case KAFL_START:
 			pr_warn("[*] Agent start!\n");
-			kafl_agent_init();
+			kafl_agent_init(0);
 			return;
 		case KAFL_ENABLE:
 			pr_warn("[*] Agent enable!\n");
