@@ -1,0 +1,1573 @@
+Only in VirtualBox-7.1.8/src/VBox/Devices/USB: .nyx_api.h.swo
+diff -r VirtualBox-7.1.8/src/VBox/Devices/USB/DevXHCI.cpp /mnt/shared/VirtualBox-7.1.8/src/VBox/Devices/USB/DevXHCI.cpp
+288c288
+< #include <VBox/vmm/pdmdev.h>
+---
+> #include <VBox/vmm/pdm.h>
+304,305d303
+< #include <VBox/nyx_api.h>
+< #define NYX_API_INCLUDED
+381c379
+< //AssertCompile((XHCI_NINTR & XHCI_INTR_MASK) == 0);
+---
+> AssertCompile((XHCI_NINTR & XHCI_INTR_MASK) == 0);
+388,390c386,388
+< //AssertCompile(XHCI_NDP_MAX < 255 && XHCI_NINTR < 1024 && XHCI_NDS < 255);
+< //AssertCompile(XHCI_NDP_20_DEFAULT + XHCI_NDP_30_DEFAULT <= XHCI_NDP_MAX);
+< //AssertCompile(XHCI_NDP_MAX <= XHCI_NDS);
+---
+> AssertCompile(XHCI_NDP_MAX < 255 && XHCI_NINTR < 1024 && XHCI_NDS < 255);
+> AssertCompile(XHCI_NDP_20_DEFAULT + XHCI_NDP_30_DEFAULT <= XHCI_NDP_MAX);
+> AssertCompile(XHCI_NDP_MAX <= XHCI_NDS);
+403c401
+< //AssertCompile(XHCI_ERSTMAX_LOG2 < 16);
+---
+> AssertCompile(XHCI_ERSTMAX_LOG2 < 16);
+428,430c426,428
+< //AssertCompile(XHCI_DOORBELL_OFFSET > XHCI_RTREG_OFFSET);
+< //AssertCompile(XHCI_XECP_OFFSET > XHCI_PORT_REG_OFFSET + XHCI_CAPS_REG_SIZE);
+< //AssertCompile(XHCI_RTREG_OFFSET > XHCI_XECP_OFFSET + XHCI_EXT_CAP_SIZE);
+---
+> AssertCompile(XHCI_DOORBELL_OFFSET > XHCI_RTREG_OFFSET);
+> AssertCompile(XHCI_XECP_OFFSET > XHCI_PORT_REG_OFFSET + XHCI_CAPS_REG_SIZE);
+> AssertCompile(XHCI_RTREG_OFFSET > XHCI_XECP_OFFSET + XHCI_EXT_CAP_SIZE);
+771c769
+< //AssertCompile(sizeof(XHCI_TRB_G) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_G) == 0x10);
+791c789
+< //AssertCompile(sizeof(XHCI_TRB_GX) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_GX) == 0x10);
+815c813
+< //AssertCompile(sizeof(XHCI_TRB_NORM) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_NORM) == 0x10);
+837c835
+< //AssertCompile(sizeof(XHCI_TRB_CTSP) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_CTSP) == 0x10);
+857c855
+< //AssertCompile(sizeof(XHCI_TRB_CTDT) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_CTDT) == 0x10);
+874c872
+< //AssertCompile(sizeof(XHCI_TRB_CTSS) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_CTSS) == 0x10);
+896c894
+< //AssertCompile(sizeof(XHCI_TRB_ISOC) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_ISOC) == 0x10);
+915c913
+< //AssertCompile(sizeof(XHCI_TRB_NOPT) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_NOPT) == 0x10);
+935c933
+< //AssertCompile(sizeof(XHCI_TRB_TE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_TE) == 0x10);
+948c946
+< //AssertCompile(sizeof(XHCI_TRB_CCE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_CCE) == 0x10);
+962c960
+< //AssertCompile(sizeof(XHCI_TRB_PSCE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_PSCE) == 0x10);
+976c974
+< //AssertCompile(sizeof(XHCI_TRB_BRE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_BRE) == 0x10);
+991c989
+< //AssertCompile(sizeof(XHCI_TRB_DBE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_DBE) == 0x10);
+1004c1002
+< //AssertCompile(sizeof(XHCI_TRB_HCE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_HCE) == 0x10);
+1020c1018
+< //AssertCompile(sizeof(XHCI_TRB_DNE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_DNE) == 0x10);
+1033c1031
+< //AssertCompile(sizeof(XHCI_TRB_MWE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_MWE) == 0x10);
+1046c1044
+< //AssertCompile(sizeof(XHCI_TRB_NCE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_NCE) == 0x10);
+1063c1061
+< //AssertCompile(sizeof(XHCI_TRB_NOPC) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_NOPC) == 0x10);
+1075c1073
+< //AssertCompile(sizeof(XHCI_TRB_ESL) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_ESL) == 0x10);
+1088c1086
+< //AssertCompile(sizeof(XHCI_TRB_DSL) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_DSL) == 0x10);
+1101c1099
+< //AssertCompile(sizeof(XHCI_TRB_ADR) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_ADR) == 0x10);
+1114c1112
+< //AssertCompile(sizeof(XHCI_TRB_CFG) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_CFG) == 0x10);
+1126c1124
+< //AssertCompile(sizeof(XHCI_TRB_EVC) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_EVC) == 0x10);
+1141c1139
+< //AssertCompile(sizeof(XHCI_TRB_RSE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_RSE) == 0x10);
+1156c1154
+< //AssertCompile(sizeof(XHCI_TRB_STP) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_STP) == 0x10);
+1176c1174
+< //AssertCompile(sizeof(XHCI_TRB_STDP) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_STDP) == 0x10);
+1189c1187
+< //AssertCompile(sizeof(XHCI_TRB_RSD) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_RSD) == 0x10);
+1202c1200
+< //AssertCompile(sizeof(XHCI_TRB_GPBW) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_GPBW) == 0x10);
+1216c1214
+< //AssertCompile(sizeof(XHCI_TRB_FHD) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_FHD) == 0x10);
+1228c1226
+< //AssertCompile(sizeof(XHCI_TRB_NAC) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_NAC) == 0x10);
+1248c1246
+< //AssertCompile(sizeof(XHCI_TRB_LNK) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_LNK) == 0x10);
+1265c1263
+< //AssertCompile(sizeof(XHCI_TRB_EVTD) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_TRB_EVTD) == 0x10);
+1282c1280
+< //AssertCompile(sizeof(XHCI_XFER_TRB) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_XFER_TRB) == 0x10);
+1301c1299
+< //AssertCompile(sizeof(XHCI_COMMAND_TRB) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_COMMAND_TRB) == 0x10);
+1315c1313
+< //AssertCompile(sizeof(XHCI_EVENT_TRB) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_EVENT_TRB) == 0x10);
+1342c1340
+< //AssertCompile(sizeof(XHCI_SLOT_CTX) == 0x20);
+---
+> AssertCompile(sizeof(XHCI_SLOT_CTX) == 0x20);
+1384c1382
+< //AssertCompile(sizeof(XHCI_EP_CTX) == 0x20);
+---
+> AssertCompile(sizeof(XHCI_EP_CTX) == 0x20);
+1442c1440
+< //AssertCompile(sizeof(XHCI_INPC_CTX) == 0x20);
+---
+> AssertCompile(sizeof(XHCI_INPC_CTX) == 0x20);
+1445,1446c1443,1444
+< //AssertCompile(sizeof(XHCI_EP_CTX) == sizeof(XHCI_SLOT_CTX));
+< //AssertCompile(sizeof(XHCI_EP_CTX) == sizeof(XHCI_INPC_CTX));
+---
+> AssertCompile(sizeof(XHCI_EP_CTX) == sizeof(XHCI_SLOT_CTX));
+> AssertCompile(sizeof(XHCI_EP_CTX) == sizeof(XHCI_INPC_CTX));
+1457c1455
+< //AssertCompile(sizeof(XHCI_ERSTE) == 0x10);
+---
+> AssertCompile(sizeof(XHCI_ERSTE) == 0x10);
+1473,1474c1471,1472
+< //AssertCompile(sizeof(XHCI_DEV_CTX) == 32 * sizeof(XHCI_EP_CTX));
+< //AssertCompile(sizeof(XHCI_DEV_CTX) == 32 * sizeof(XHCI_SLOT_CTX));
+---
+> AssertCompile(sizeof(XHCI_DEV_CTX) == 32 * sizeof(XHCI_EP_CTX));
+> AssertCompile(sizeof(XHCI_DEV_CTX) == 32 * sizeof(XHCI_SLOT_CTX));
+1919,1920c1917,1918
+<     //Assert(nPortOfs + cPorts < 255);
+<     //Assert(ver == 2 || ver == 3);
+---
+>     Assert(nPortOfs + cPorts < 255);
+>     Assert(ver == 2 || ver == 3);
+1944,1945c1942,1943
+<     //Assert(*puPrevOfs <= pThis->cbExtCap);
+<     //Assert(!(cbCap & 3));
+---
+>     Assert(*puPrevOfs <= pThis->cbExtCap);
+>     Assert(!(cbCap & 3));
+1972,1973c1970,1971
+<     //Assert(XHCI_NDP_USB2(pThisCC));
+<     //Assert(XHCI_NDP_USB3(pThisCC));
+---
+>     Assert(XHCI_NDP_USB2(pThisCC));
+>     Assert(XHCI_NDP_USB3(pThisCC));
+1980c1978
+<     //AssertReturn(RT_SUCCESS(rc), rc);
+---
+>     AssertReturn(RT_SUCCESS(rc), rc);
+1984c1982
+<     //AssertReturn(RT_SUCCESS(rc), rc);
+---
+>     AssertReturn(RT_SUCCESS(rc), rc);
+2021,2022c2019,2020
+<     //Assert(uSlotID > 0);
+<     //Assert(uSlotID < XHCI_NDS);
+---
+>     Assert(uSlotID > 0);
+>     Assert(uSlotID < XHCI_NDS);
+2028c2026
+<     //Assert(uCtxAddr);
+---
+>     Assert(uCtxAddr);
+2067,2069c2065,2067
+<     //AssertPtr(pSlot);
+<     //AssertPtr(pEp);
+<     //Assert(uDCI);   /* Can't be 0 -- that's the device context. */
+---
+>     AssertPtr(pSlot);
+>     AssertPtr(pEp);
+>     Assert(uDCI);   /* Can't be 0 -- that's the device context. */
+2074c2072
+<     //Assert(pSlot->ctx_ent >= uDCI);
+---
+>     Assert(pSlot->ctx_ent >= uDCI);
+2097,2098c2095,2096
+<     //AssertPtr(pEp);
+<     //Assert(uDCI);   /* Can't be 0 -- that's the device context. */
+---
+>     AssertPtr(pEp);
+>     Assert(uDCI);   /* Can't be 0 -- that's the device context. */
+2145c2143
+<     //AssertRC(rc);
+---
+>     AssertRC(rc);
+2174c2172
+<         //AssertRC(rc);
+---
+>         AssertRC(rc);
+2186c2184
+<     //Assert(ip->erst_idx < ip->erstsz);
+---
+>     Assert(ip->erst_idx < ip->erstsz);
+2194c2192
+<     //Assert((pThis->status & XHCI_STATUS_HCH) || (entry.size >= 16 && entry.size <= 4096));
+---
+>     Assert((pThis->status & XHCI_STATUS_HCH) || (entry.size >= 16 && entry.size <= 4096));
+2212c2210
+<     //Assert(pThis && ip);
+---
+>     Assert(pThis && ip);
+2263c2261
+<     //Assert(pThis && ip);
+---
+>     Assert(pThis && ip);
+2350c2348
+<         //Assert(iIntr < XHCI_NINTR); /* Supplied by guest, potentially invalid. */
+---
+>         Assert(iIntr < XHCI_NINTR); /* Supplied by guest, potentially invalid. */
+2483,2484c2481,2482
+<     //Assert(uSlotID <= RT_ELEMENTS(pThis->aSlotState));
+<     //Assert(pThis->aSlotState[ID_TO_IDX(uSlotID)] > XHCI_DEVSLOT_EMPTY);
+---
+>     Assert(uSlotID <= RT_ELEMENTS(pThis->aSlotState));
+>     Assert(pThis->aSlotState[ID_TO_IDX(uSlotID)] > XHCI_DEVSLOT_EMPTY);
+2495c2493
+<         //Assert(pRh);
+---
+>         Assert(pRh);
+2578,2580c2576,2578
+<     //AssertPtr(pvContext);
+<     //AssertPtr(pTREP);
+<     //Assert(uTRP);
+---
+>     AssertPtr(pvContext);
+>     AssertPtr(pTREP);
+>     Assert(uTRP);
+2601c2599
+<                 //Assert(XferTRB.link.chain);
+---
+>                 Assert(XferTRB.link.chain);
+2606c2604
+<                 //Assert(!XferTRB.link.ioc);  /// @todo Needs to be reported.
+---
+>                 Assert(!XferTRB.link.ioc);  /// @todo Needs to be reported.
+2645c2643
+<     //Assert(!(GCPhysXfrTRB & ~XHCI_TRDP_ADDR_MASK));
+---
+>     Assert(!(GCPhysXfrTRB & ~XHCI_TRDP_ADDR_MASK));
+2775c2773
+<                     //Assert(uXferLen >= 1 && uXferLen <= 8);
+---
+>                     Assert(uXferLen >= 1 && uXferLen <= 8);
+2848c2846
+<             //Assert(!pXferTRB->norm.idt);
+---
+>             Assert(!pXferTRB->norm.idt);
+2892c2890
+<         //AssertMsgFailed(("%#x\n", pXferTRB->gen.type));
+---
+>         AssertMsgFailed(("%#x\n", pXferTRB->gen.type));
+2939,2940c2937,2938
+<     //Assert(uSlotID > 0);
+<     //Assert(uSlotID <= XHCI_NDS);
+---
+>     Assert(uSlotID > 0);
+>     Assert(uSlotID <= XHCI_NDS);
+2942c2940
+<     //Assert(pEpCtx->ep_state == XHCI_EPST_RUNNING);
+---
+>     Assert(pEpCtx->ep_state == XHCI_EPST_RUNNING);
+2969,2970c2967,2968
+<                 //Assert(!xfer.link.chain);
+<                 //AssertCompile(XHCI_TRDP_DCS_MASK == 1); /* link.toggle is 0 or 1, can be used as XHCI_TRDP_DCS_MASK */
+---
+>                 Assert(!xfer.link.chain);
+>                 AssertCompile(XHCI_TRDP_DCS_MASK == 1); /* link.toggle is 0 or 1, can be used as XHCI_TRDP_DCS_MASK */
+2984c2982
+<                 //Assert(!xfer.link.chain);
+---
+>                 Assert(!xfer.link.chain);
+3020c3018
+<     //Assert(GCPhysXfrTRB);
+---
+>     Assert(GCPhysXfrTRB);
+3156,3158c3154,3155
+<             //AssertMsgFailed(("Unexpected URB status %u\n", pUrb->enmStatus));
+<             break;
+< 	}
+---
+>             AssertMsgFailed(("Unexpected URB status %u\n", pUrb->enmStatus));
+>         }
+3232c3229
+<         //AssertMsgFailed(("Unexpected TRB type %u\n", xfer.gen.type));
+---
+>         AssertMsgFailed(("Unexpected TRB type %u\n", xfer.gen.type));
+3280c3277
+<     //Assert(pUrb->pHci->cTRB); /* xHCI-generated URBs should not fail! */
+---
+>     Assert(pUrb->pHci->cTRB); /* xHCI-generated URBs should not fail! */
+3303c3300
+<         //AssertMsgFailed(("%#x\n", pUrb->enmStatus));
+---
+>         AssertMsgFailed(("%#x\n", pUrb->enmStatus));
+3387c3384
+<         //AssertMsgFailed(("%#x\n", pEpCtx->ep_type));
+---
+>         AssertMsgFailed(("%#x\n", pEpCtx->ep_type));
+3403c3400
+<         //AssertMsgFailed(("%#x\n", pEpCtx->ep_type));
+---
+>         AssertMsgFailed(("%#x\n", pEpCtx->ep_type));
+3414c3411
+<     //Assert(uEpDCI);
+---
+>     Assert(uEpDCI);
+3431c3428
+<         //Assert(ctxProbe.cTRB == ctxSubmit.cTRB);
+---
+>         Assert(ctxProbe.cTRB == ctxSubmit.cTRB);
+3507c3504
+<     //Assert(uEpDCI);
+---
+>     Assert(uEpDCI);
+3551,3552c3548,3549
+<         //AssertMsg(pEpCtx->ep_type == XHCI_EPTYPE_ISOCH_IN || pEpCtx->ep_type == XHCI_EPTYPE_ISOCH_OUT,
+<         //          ("%#x\n", pEpCtx->ep_type));
+---
+>         AssertMsg(pEpCtx->ep_type == XHCI_EPTYPE_ISOCH_IN || pEpCtx->ep_type == XHCI_EPTYPE_ISOCH_OUT,
+>                   ("%#x\n", pEpCtx->ep_type));
+3611c3608
+<         //Assert(cIsoPackets > 1);
+---
+>         Assert(cIsoPackets > 1);
+3628c3625
+<         //Assert(ctxProbe.cTRB == ctxSubmit.cTRB);
+---
+>         Assert(ctxProbe.cTRB == ctxSubmit.cTRB);
+3632c3629
+<     //Assert(pCtxIso->iPkt < 8);
+---
+>     Assert(pCtxIso->iPkt < 8);
+3635c3632
+<     //Assert(pCtxIso->offCur <= pUrb->cbData);
+---
+>     Assert(pCtxIso->offCur <= pUrb->cbData);
+3718,3719c3715,3716
+<         //Assert(sizeof(VUSBSETUP) == 8);
+<         //Assert(ctxProbe.uXferLen == 8);
+---
+>         Assert(sizeof(VUSBSETUP) == 8);
+>         Assert(ctxProbe.uXferLen == 8);
+3730c3727
+<         //AssertMsgFailed(("%#x\n", pTrb->gen.type)); /* Can't happen unless caller messed up. */
+---
+>         AssertMsgFailed(("%#x\n", pTrb->gen.type)); /* Can't happen unless caller messed up. */
+3743c3740
+<     //Assert(uEpDCI);
+---
+>     Assert(uEpDCI);
+3746c3743
+<     //AssertMsg(pEpCtx->ep_type == XHCI_EPTYPE_CONTROL, ("%#x\n", pEpCtx->ep_type));
+---
+>     AssertMsg(pEpCtx->ep_type == XHCI_EPTYPE_CONTROL, ("%#x\n", pEpCtx->ep_type));
+3760c3757
+<         //Assert(ctxProbe.cTRB == ctxSubmit.cTRB);
+---
+>         Assert(ctxProbe.cTRB == ctxSubmit.cTRB);
+3815,3816c3812,3813
+<     //Assert(uSlotID > 0);
+<     //Assert(uSlotID <= XHCI_NDS);
+---
+>     Assert(uSlotID > 0);
+>     Assert(uSlotID <= XHCI_NDS);
+3818,3819c3815,3816
+<     //Assert(uDBTarget > 0);
+<     //Assert(uDBTarget < 32);
+---
+>     Assert(uDBTarget > 0);
+>     Assert(uDBTarget < 32);
+3944c3941
+<                 //Assert(!xfer.link.chain);
+---
+>                 Assert(!xfer.link.chain);
+3954c3951
+<                 //Assert(!xfer.link.chain);
+---
+>                 Assert(!xfer.link.chain);
+4039c4036
+<     //Assert(uSlotID);
+---
+>     Assert(uSlotID);
+4133,4134c4130,4131
+<     //Assert(GCPhysInpCtx);
+<     //Assert(uSlotID);
+---
+>     Assert(GCPhysInpCtx);
+>     Assert(uSlotID);
+4173,4174c4170,4171
+<         //Assert(icc.add_flags == (RT_BIT(0) | RT_BIT(1)));   /* Should have been already checked. */
+<         //Assert(!icc.drop_flags);
+---
+>         Assert(icc.add_flags == (RT_BIT(0) | RT_BIT(1)));   /* Should have been already checked. */
+>         Assert(!icc.drop_flags);
+4244c4241
+<     //Assert(uSlotID);
+---
+>     Assert(uSlotID);
+4308c4305
+<     //Assert(uSlotID);
+---
+>     Assert(uSlotID);
+4433c4430
+<     //Assert(uSlotID);
+---
+>     Assert(uSlotID);
+4497c4494
+<     //Assert(uSlotID);
+---
+>     Assert(uSlotID);
+4517c4514
+<         //Assert(num_ctx);
+---
+>         Assert(num_ctx);
+4570c4567
+<     //Assert(uSlotID);
+---
+>     Assert(uSlotID);
+4575c4572
+<     //Assert(GCPhysOutSlot);
+---
+>     Assert(GCPhysOutSlot);
+4624c4621
+<         //Assert(GCPhysInpCtx);
+---
+>         Assert(GCPhysInpCtx);
+4626c4623
+<         //Assert(icc.add_flags || icc.drop_flags);    /* Make sure there's something to do. */
+---
+>         Assert(icc.add_flags || icc.drop_flags);    /* Make sure there's something to do. */
+4643c4640
+<             //Assert(num_inp_ctx);
+---
+>             Assert(num_inp_ctx);
+4674c4671
+<             //Assert(!fDC);
+---
+>             Assert(!fDC);
+4694c4691
+<             //Assert(dc_inp.entry[0].sc.ctx_ent);
+---
+>             Assert(dc_inp.entry[0].sc.ctx_ent);
+4706c4703
+<                 //Assert(dc_out.entry[0].sc.ctx_ent + 1u == num_out_ctx);
+---
+>                 Assert(dc_out.entry[0].sc.ctx_ent + 1u == num_out_ctx);
+4750,4751c4747,4748
+<     //Assert(GCPhysInpCtx);
+<     //Assert(uSlotID);
+---
+>     Assert(GCPhysInpCtx);
+>     Assert(uSlotID);
+4756c4753
+<     //Assert(GCPhysOutSlot);
+---
+>     Assert(GCPhysOutSlot);
+4797c4794
+<         //Assert(num_inp_ctx);
+---
+>         Assert(num_inp_ctx);
+4864,4865c4861,4862
+<     //Assert(!uHubSlotID);
+<     //Assert(uBwCtx);
+---
+>     Assert(!uHubSlotID);
+>     Assert(uBwCtx);
+4881c4878
+<     //Assert(ctx_size <= sizeof(bw_ctx));
+---
+>     Assert(ctx_size <= sizeof(bw_ctx));
+5165,5166c5162,5163
+<     //Assert(pThis->crcr & (XHCI_CRCR_CA | XHCI_CRCR_CS));
+<     //Assert(pThis->crcr & XHCI_CRCR_CRR);
+---
+>     Assert(pThis->crcr & (XHCI_CRCR_CA | XHCI_CRCR_CS));
+>     Assert(pThis->crcr & XHCI_CRCR_CRR);
+5181c5178
+<     //Assert(pThis->crcr & XHCI_CRCR_CRR);
+---
+>     Assert(pThis->crcr & XHCI_CRCR_CRR);
+5262c5259
+<             //AssertLogRelMsgReturn(RT_SUCCESS(rc) || rc == VERR_INTERRUPTED, ("%Rrc\n", rc), rc);
+---
+>             AssertLogRelMsgReturn(RT_SUCCESS(rc) || rc == VERR_INTERRUPTED, ("%Rrc\n", rc), rc);
+5366c5363
+<         //Assert((*ppLed)->u32Magic == PDMLED_MAGIC);
+---
+>         Assert((*ppLed)->u32Magic == PDMLED_MAGIC);
+5396c5393
+<         //Assert(iPort < XHCI_NDP_CFG(PDMDEVINS_2_DATA(pDevIns, PXHCI)));
+---
+>         Assert(iPort < XHCI_NDP_CFG(PDMDEVINS_2_DATA(pDevIns, PXHCI)));
+5449c5446
+<     //Assert(pThis->status & XHCI_STATUS_HCH);
+---
+>     Assert(pThis->status & XHCI_STATUS_HCH);
+5527c5524
+<     //AssertReturnVoid(iPort < XHCI_NDP_CFG(pThis));
+---
+>     AssertReturnVoid(iPort < XHCI_NDP_CFG(pThis));
+5594c5591
+<     default:                //AssertMsgFailed(("%d\n", enmSpeed));
+---
+>     default:                AssertMsgFailed(("%d\n", enmSpeed));
+5616c5613
+<     //AssertRCReturn(rcLock, rcLock);
+---
+>     AssertRCReturn(rcLock, rcLock);
+5621c5618
+<     //Assert(uPort >= 1 && uPort <= pRh->cPortsImpl);
+---
+>     Assert(uPort >= 1 && uPort <= pRh->cPortsImpl);
+5623c5620
+<     //Assert(iPort < XHCI_NDP_CFG(pThis));
+---
+>     Assert(iPort < XHCI_NDP_CFG(pThis));
+5625,5626c5622,5623
+<     //Assert(!pThisCC->aPorts[iPort].fAttached);
+<     //Assert(enmSpeed != VUSB_SPEED_UNKNOWN);
+---
+>     Assert(!pThisCC->aPorts[iPort].fAttached);
+>     Assert(enmSpeed != VUSB_SPEED_UNKNOWN);
+5638c5635
+<         //Assert(enmSpeed == VUSB_SPEED_SUPER);
+---
+>         Assert(enmSpeed == VUSB_SPEED_SUPER);
+5649c5646
+<         //Assert(enmSpeed == VUSB_SPEED_LOW || enmSpeed == VUSB_SPEED_FULL || enmSpeed == VUSB_SPEED_HIGH);
+---
+>         Assert(enmSpeed == VUSB_SPEED_LOW || enmSpeed == VUSB_SPEED_FULL || enmSpeed == VUSB_SPEED_HIGH);
+5682c5679
+<     //Assert(uPort >= 1 && uPort <= pRh->cPortsImpl);
+---
+>     Assert(uPort >= 1 && uPort <= pRh->cPortsImpl);
+5684c5681
+<     //Assert(iPort < XHCI_NDP_CFG(pThis));
+---
+>     Assert(iPort < XHCI_NDP_CFG(pThis));
+5686c5683
+<     //Assert(pThisCC->aPorts[iPort].fAttached);
+---
+>     Assert(pThisCC->aPorts[iPort].fAttached);
+5865c5862
+<     //AssertRCReturn(rcLock, rcLock);
+---
+>     AssertRCReturn(rcLock, rcLock);
+6326c6323
+<     //Assert(!(pThis->hcc_params & XHCI_HCC_PPC));
+---
+>     Assert(!(pThis->hcc_params & XHCI_HCC_PPC));
+6355c6352
+<     
+---
+> 
+6387,6389c6384,6386
+<         //AssertMsg(!(val & XHCI_PORT_CTL_W1_MASK), ("val=%X\n", val));
+<         //AssertMsg(!(val & XHCI_PORT_LWS), ("val=%X\n", val));
+<         //AssertMsg((val & ~(XHCI_PORT_RO_MASK|XHCI_PORT_CTL_W1_MASK|XHCI_PORT_PLS_MASK|XHCI_PORT_CHANGE_MASK)) == (p->portsc & ~(XHCI_PORT_RO_MASK|XHCI_PORT_CTL_W1_MASK|XHCI_PORT_PLS_MASK|XHCI_PORT_CHANGE_MASK)), ("val=%X vs. portsc=%X\n", val, p->portsc));
+---
+>         AssertMsg(!(val & XHCI_PORT_CTL_W1_MASK), ("val=%X\n", val));
+>         AssertMsg(!(val & XHCI_PORT_LWS), ("val=%X\n", val));
+>         AssertMsg((val & ~(XHCI_PORT_RO_MASK|XHCI_PORT_CTL_W1_MASK|XHCI_PORT_PLS_MASK|XHCI_PORT_CHANGE_MASK)) == (p->portsc & ~(XHCI_PORT_RO_MASK|XHCI_PORT_CTL_W1_MASK|XHCI_PORT_PLS_MASK|XHCI_PORT_CHANGE_MASK)), ("val=%X vs. portsc=%X\n", val, p->portsc));
+6396,6397c6393,6394
+<     //Assert(!(pThis->hcc_params & XHCI_HCC_PPC));
+<     //Assert(p->portsc & XHCI_PORT_PP);
+---
+>     Assert(!(pThis->hcc_params & XHCI_HCC_PPC));
+>     Assert(p->portsc & XHCI_PORT_PP);
+6934c6931
+< //AssertCompile(RT_ELEMENTS(g_aPortRegs) * sizeof(uint32_t) == 0x10);
+---
+> AssertCompile(RT_ELEMENTS(g_aPortRegs) * sizeof(uint32_t) == 0x10);
+6952c6949
+< //AssertCompile(RT_ELEMENTS(g_aIntrRegs) * sizeof(uint32_t) == 0x20);
+---
+> AssertCompile(RT_ELEMENTS(g_aIntrRegs) * sizeof(uint32_t) == 0x20);
+6977,7165d6973
+< void check_buffer(uint8_t* payload) {
+<     if (payload[0] == 't') {
+<     if (payload[1] == 'e') {
+<     if (payload[2] == 's') {
+<     if (payload[3] == 't') {
+<     if (payload[4] == '1') {
+<     if (payload[5] == '2') {
+<     if (payload[6] == '3') {
+<     if (payload[7] == '4') {
+<     if (payload[8] == '5') {
+<     if (payload[9] == '6') {
+<     if (payload[10] == '7') {
+<     if (payload[11] == '8') {
+<     if (payload[12] == '9') {
+<     if (payload[13] == '1') {
+<     if (payload[14] == '0') {
+<     if (payload[15] == 'l') {
+<     if (payload[16] == 'e') {
+<     if (payload[17] == 'e') {
+<     if (payload[18] == 't') {
+<     if (payload[19] == '1') {
+<     if (payload[20] == '3') {
+<     if (payload[21] == '3') {
+<     if (payload[22] == '7') {
+<     	//Log2(("xhciRead %RGp (offset %04X) size=%d\n", off, offReg, cb));
+<     
+<     	//kafl_hprintf("hit\n");
+<     }}}}}}}}}}}}}}}}}}}}}}}
+< }
+< 
+< kAFL_payload* payload_buffer = NULL;
+< 
+< typedef struct off_val_s {
+< 	uint32_t off;
+< 	uint32_t val;
+< } off_val_t;
+< 
+< typedef struct mmio_write_fuzz_s {
+< 	uint32_t i;
+< 	off_val_t arr[];	
+< } mmio_write_fuzz_t;
+< 
+< /**
+<  * @callback_method_impl{FNIOMMMIONEWWRITE, Write to a MMIO register.}
+<  *
+<  * @note We only accept 32-bit writes that are 32-bit aligned.
+<  */
+< static DECLCALLBACK(VBOXSTRICTRC) xhciMmioWriteFuzzInternal(PPDMDEVINS pDevIns, void *pvUser, RTGCPHYS off, void const *pv, unsigned cb)
+< {
+<     PXHCI               pThis  = PDMDEVINS_2_DATA(pDevIns, PXHCI);
+<     const uint32_t      offReg = (uint32_t)off;
+<     uint32_t * const    pu32   = (uint32_t *)pv;
+<     uint32_t            iReg;
+<     RT_NOREF(pvUser);
+< 
+<     Log2(("xhciWrite %RGp (offset %04X) %x size=%d\n", off, offReg, *(uint32_t *)pv, cb));
+< 
+<     if (offReg < XHCI_CAPS_REG_SIZE)
+<     {
+<         /* These are read-only */
+<         Log(("xHCI: Trying to write to register %u!\n", offReg));
+<         STAM_COUNTER_INC(&pThis->StatWrUnknown);
+<         return VINF_SUCCESS;
+<     }
+< 
+<     /*
+<      * Validate the access (in case of IOM bug or incorrect MMIO registration).
+<      */
+<     ////AssertMsgReturn(cb == sizeof(uint32_t), ("IOM bug? %RGp LB %d\n", off, cb), VINF_SUCCESS);
+<     ////AssertMsgReturn(!(off & 0x3),    ("IOM bug? %RGp LB %d\n", off, cb), VINF_SUCCESS);
+< 
+<     /*
+<      * Validate the register and call the write operator.
+<      */
+<     VBOXSTRICTRC rcStrict = VINF_IOM_MMIO_UNUSED_FF;
+<     if (offReg >= XHCI_DOORBELL_OFFSET)
+<     {
+<         /* Let's spring into action... as long as the xHC is running. */
+<         iReg = (offReg - XHCI_DOORBELL_OFFSET) >> 2;
+<     
+< 	    
+< 	if ((pThis->cmd & XHCI_CMD_RS) && iReg < XHCI_NDS)
+<         {
+<             if (iReg == 0)
+<             {
+<                 /* DB0 aka Command Ring. */
+<                 STAM_COUNTER_INC(&pThis->StatWrDoorBell0);
+<                 if (*pu32 == 0)
+<                 {
+<                     /* Set the Command Ring state to Running if not already set. */
+<                     if (!(pThis->crcr & XHCI_CRCR_CRR))
+<                     {
+<                         Log(("Command ring entered Running state\n"));
+<                         ASMAtomicOrU64(&pThis->crcr, XHCI_CRCR_CRR);
+<                     }
+<                     xhciKickWorker(pDevIns, pThis, XHCI_JOB_PROCESS_CMDRING, 0);
+<                 }
+<                 else
+<                     Log2(("Ignoring DB0 write with value %X!\n", *pu32));
+<             }
+<             else
+<             {
+<                 /* Device context doorbell. Do basic parameter checking to avoid
+<                  * waking up the worker thread needlessly.
+<                  */
+<                 STAM_COUNTER_INC(&pThis->StatWrDoorBellN);
+<                 uint8_t uDBTarget = *pu32 & XHCI_DB_TGT_MASK;
+<                 //Assert(uDBTarget < 32); /// @todo Report an error? Or just ignore?
+<                 if (uDBTarget < 32)
+<                 {
+<                     Log2(("Ring bell for slot %u, DCI %u\n", iReg, uDBTarget));
+<                     ASMAtomicOrU32(&pThis->aBellsRung[ID_TO_IDX(iReg)], 1 << uDBTarget);
+<                     xhciKickWorker(pDevIns, pThis, XHCI_JOB_DOORBELL, *pu32);
+<                 }
+<                 else
+<                     Log2(("Ignoring DB%u write with bad target %u!\n", iReg, uDBTarget));
+<             }
+<             rcStrict = VINF_SUCCESS;
+<             Log2(("xhciWrite: DBellReg (DB %u) %RGp size=%d <- val=%x (rc=%d)\n", iReg, off, cb, *(uint32_t *)pv, VBOXSTRICTRC_VAL(rcStrict)));
+<         }
+<     }
+<     else if (offReg >= XHCI_RTREG_OFFSET)
+<     {
+<         /* Run-time registers. */
+<         //Assert(offReg < XHCI_DOORBELL_OFFSET);
+<         /* NB: The MFINDEX register is R/O. */
+<         if (offReg >= XHCI_RTREG_OFFSET + (RT_ELEMENTS(g_aIntrRegs) * sizeof(uint32_t)))
+<         {
+<             //Assert((offReg - XHCI_RTREG_OFFSET) / (RT_ELEMENTS(g_aIntrRegs) * sizeof(uint32_t)) > 0);
+<             const uint32_t iIntr = (offReg - XHCI_RTREG_OFFSET) / (RT_ELEMENTS(g_aIntrRegs) * sizeof(uint32_t)) - 1;
+< 
+<             if (iIntr < XHCI_NINTR)
+<             {
+<                 iReg = (offReg >> 2) & (RT_ELEMENTS(g_aIntrRegs) - 1);
+<                 const XHCIINTRREGACC *pReg = &g_aIntrRegs[iReg];
+<                 if (pReg->pfnIntrWrite)
+<                 {
+<                     PXHCIINTRPTR pIntr = &pThis->aInterrupters[iIntr];
+<                     rcStrict = pReg->pfnIntrWrite(pDevIns, pThis, pIntr, *pu32);
+<                     Log2(("xhciWrite: IntrReg (intr %u): %RGp (%s) size=%d <- val=%x (rc=%d)\n", iIntr, off, pReg->pszName, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+<                 }
+<             }
+<         }
+<     }
+<     else
+<     {
+<         /* Operational registers (incl. port registers). */
+<         //Assert(offReg < XHCI_RTREG_OFFSET);
+<         iReg = (offReg - pThis->cap_length) >> 2;
+<         if (iReg < RT_ELEMENTS(g_aOpRegs))
+<         {
+<             const XHCIREGACC *pReg = &g_aOpRegs[iReg];
+<             if (pReg->pfnWrite)
+<             {
+<                 rcStrict = pReg->pfnWrite(pDevIns, pThis, iReg, *(uint32_t *)pv);
+<                 Log2(("xhciWrite: OpReg %RGp (%s) size=%d <- val=%x (rc=%d)\n", off, pReg->pszName, cb, *(uint32_t *)pv, VBOXSTRICTRC_VAL(rcStrict)));
+<             }
+<         }
+<         else if (iReg >= (XHCI_PORT_REG_OFFSET >> 2))
+<         {
+<             iReg -= (XHCI_PORT_REG_OFFSET >> 2);
+<             const uint32_t iPort = iReg / RT_ELEMENTS(g_aPortRegs);
+<             if (iPort < XHCI_NDP_CFG(pThis))
+<             {
+<                 iReg = (offReg >> 2) & (RT_ELEMENTS(g_aPortRegs) - 1);
+<                 //Assert(iReg < RT_ELEMENTS(g_aPortRegs));
+<                 const XHCIREGACC *pReg = &g_aPortRegs[iReg];
+<                 if (pReg->pfnWrite)
+<                 {
+<                     rcStrict = pReg->pfnWrite(pDevIns, pThis, iPort, *pu32);
+<                     Log2(("xhciWrite: PortReg (port %u): %RGp (%s) size=%d <- val=%x (rc=%d)\n", IDX_TO_ID(iPort), off, pReg->pszName, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+<                 }
+<             }
+<         }
+<     }
+< 
+<     if (rcStrict != VINF_IOM_MMIO_UNUSED_FF)
+<     { /* likely */ }
+<     else
+<     {
+<         /* Ignore writes to unimplemented or read-only registers. */
+<         STAM_COUNTER_INC(&pThis->StatWrUnknown);
+<         Log(("xHCI: Trying to write unimplemented or R/O register at offset %04X!\n", offReg));
+<         rcStrict = VINF_SUCCESS;
+<     }
+< 
+<     return rcStrict;
+< }
+< 
+7174c6982
+<     uint32_t      offReg = (uint32_t)off;
+---
+>     const uint32_t      offReg = (uint32_t)off;
+7177,7179d6984
+<     uint32_t *a = NULL;
+< //    mmio_write_fuzz_t *payload = payload_buffer;
+<     
+7181a6987,6988
+>     Log2(("xhciRead %RGp (offset %04X) size=%d\n", off, offReg, cb));
+> 
+7207,7208c7014
+< 
+< 		*pu32 = pThis->hcc_params;
+---
+>                 *pu32 = pThis->hcc_params;
+7229c7035
+< 		return VINF_IOM_MMIO_UNUSED_FF;
+---
+>                 return VINF_IOM_MMIO_UNUSED_FF;
+7233c7039
+< 	return VINF_SUCCESS;
+---
+>         return VINF_SUCCESS;
+7234a7041
+> 
+7238,7239c7045,7046
+<     //AssertMsgReturn(cb == sizeof(uint32_t), ("IOM bug? %RGp LB %d\n", off, cb),
+<                     //VINF_IOM_MMIO_UNUSED_FF /* No idea what really would happen... */);
+---
+>     AssertMsgReturn(cb == sizeof(uint32_t), ("IOM bug? %RGp LB %d\n", off, cb),
+>                     VINF_IOM_MMIO_UNUSED_FF /* No idea what really would happen... */);
+7242c7049
+<     //AssertMsgReturn(!(off & 0x3),    ("IOM bug? %RGp LB %d\n", off, cb), VINF_IOM_MMIO_UNUSED_FF);
+---
+>     AssertMsgReturn(!(off & 0x3),    ("IOM bug? %RGp LB %d\n", off, cb), VINF_IOM_MMIO_UNUSED_FF);
+7257c7064
+<             //Log2(("xhciRead: DBellReg (DB %u) %RGp size=%d -> val=%x (rc=%d)\n", iReg, off, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+---
+>             Log2(("xhciRead: DBellReg (DB %u) %RGp size=%d -> val=%x (rc=%d)\n", iReg, off, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+7263c7070
+<         //Assert(offReg < XHCI_DOORBELL_OFFSET);
+---
+>         Assert(offReg < XHCI_DOORBELL_OFFSET);
+7279c7086
+<             //Assert((offReg - XHCI_RTREG_OFFSET) / (RT_ELEMENTS(g_aIntrRegs) * sizeof(uint32_t)) > 0);
+---
+>             Assert((offReg - XHCI_RTREG_OFFSET) / (RT_ELEMENTS(g_aIntrRegs) * sizeof(uint32_t)) > 0);
+7290c7097
+<                     //Log2(("xhciRead: IntrReg (intr %u): %RGp (%s) size=%d -> val=%x (rc=%d)\n", iIntr, off, pReg->pszName, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+---
+>                     Log2(("xhciRead: IntrReg (intr %u): %RGp (%s) size=%d -> val=%x (rc=%d)\n", iIntr, off, pReg->pszName, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+7298c7105
+<         //Assert(offReg < XHCI_RTREG_OFFSET);
+---
+>         Assert(offReg < XHCI_RTREG_OFFSET);
+7306c7113
+<         //Log2(("xhciRead: ExtCapReg %RGp size=%d -> val=%x (rc=%d)\n", off, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+---
+>         Log2(("xhciRead: ExtCapReg %RGp size=%d -> val=%x (rc=%d)\n", off, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+7311c7118
+<         //Assert(offReg < XHCI_XECP_OFFSET);
+---
+>         Assert(offReg < XHCI_XECP_OFFSET);
+7319c7126
+<                 //Log2(("xhciRead: OpReg %RGp (%s) size=%d -> val=%x (rc=%d)\n", off, pReg->pszName, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+---
+>                 Log2(("xhciRead: OpReg %RGp (%s) size=%d -> val=%x (rc=%d)\n", off, pReg->pszName, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+7329c7136
+<                 //Assert(iReg < RT_ELEMENTS(g_aPortRegs));
+---
+>                 Assert(iReg < RT_ELEMENTS(g_aPortRegs));
+7334c7141
+<                     //Log2(("xhciRead: PortReg (port %u): %RGp (%s) size=%d -> val=%x (rc=%d)\n", IDX_TO_ID(iPort), off, pReg->pszName, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+---
+>                     Log2(("xhciRead: PortReg (port %u): %RGp (%s) size=%d -> val=%x (rc=%d)\n", IDX_TO_ID(iPort), off, pReg->pszName, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+7345c7152
+<         //Log(("xHCI: Trying to read unimplemented register at offset %04X!\n", offReg));
+---
+>         Log(("xHCI: Trying to read unimplemented register at offset %04X!\n", offReg));
+7350,7356c7157,7158
+< /*
+< #if defined(IN_RING0) and defined(FUZZ_R0)
+< kAFL_payload* payload       = NULL;
+< #elif defined(IN_RING3) and defined(FUZZ_R3)
+< kAFL_payload* payload       = NULL;
+< #endif
+< */
+---
+> 
+> 
+7362,7405c7164
+< 
+< #if defined(IN_RING0) or defined(IN_RING3)
+< static inline bool in_range(uint32_t off, uint32_t start, uint32_t size)
+< {
+<     return off >= start && off < (start + size);
+< }
+< 
+< /* Helper: check aligned 32-bit access */
+< static inline bool valid_access(uint32_t off) {
+<     return !(off & 0x3);
+< }
+< 
+< /* Harness: true if off is in an interesting region */
+< bool xhci_is_interesting(uint32_t off)
+< {
+<     if (off >= XHCI_MMIO_SIZE)
+<         return false;
+< 
+<     if (in_range(off, 0x0000, XHCI_CAPS_REG_SIZE))  // Capabilities
+<         return true;
+< 
+<     if (in_range(off, XHCI_CAPS_REG_SIZE,
+<                       XHCI_PORT_REG_OFFSET - XHCI_CAPS_REG_SIZE)) // Operational
+<         return true;
+< 
+<     if (off >= XHCI_PORT_REG_OFFSET && off < XHCI_XECP_OFFSET) // Ports
+<         return true;
+< 
+<     if (in_range(off, XHCI_XECP_OFFSET, XHCI_EXT_CAP_SIZE)) // Extended caps
+<         return true;
+< 
+<     if (off >= XHCI_RTREG_OFFSET && off < XHCI_DOORBELL_OFFSET) // Runtime
+<         return true;
+< 
+<     if (off >= XHCI_DOORBELL_OFFSET && off < XHCI_MMIO_SIZE) // Doorbells
+<         return true;
+< 
+<     return false;
+< }
+< 
+< /* Harness: true if offset corresponds to a known register */
+< /*
+<  *
+<  * bool xhci_is_interesting(PPDMDEVINS pDevIns, uint32_t off)
+---
+> static DECLCALLBACK(VBOXSTRICTRC) xhciMmioWrite(PPDMDEVINS pDevIns, void *pvUser, RTGCPHYS off, void const *pv, unsigned cb)
+7407a7167,7170
+>     const uint32_t      offReg = (uint32_t)off;
+>     uint32_t * const    pu32   = (uint32_t *)pv;
+>     uint32_t            iReg;
+>     RT_NOREF(pvUser);
+7409,7418c7172
+<     if (off >= XHCI_MMIO_SIZE || !valid_access(off))
+<         return false;
+< 
+<     if (off < XHCI_CAPS_REG_SIZE)
+<         return true;
+< 
+<     if (off >= XHCI_DOORBELL_OFFSET) {
+<         uint32_t iReg = (off - XHCI_DOORBELL_OFFSET) >> 2;
+<         return iReg < XHCI_NDS;
+<     }
+---
+>     Log2(("xhciWrite %RGp (offset %04X) %x size=%d\n", off, offReg, *(uint32_t *)pv, cb));
+7420,7423c7174,7179
+<     if (off >= XHCI_RTREG_OFFSET) {
+<         uint32_t iIntr = (off - XHCI_RTREG_OFFSET) / (XHCI_NUM_INTRREGS * sizeof(uint32_t));
+<         uint32_t iReg  = (off >> 2) & (XHCI_NUM_INTRREGS - 1);
+<         return iIntr < XHCI_NINTR && iReg < XHCI_NUM_INTRREGS;
+---
+>     if (offReg < XHCI_CAPS_REG_SIZE)
+>     {
+>         /* These are read-only */
+>         Log(("xHCI: Trying to write to register %u!\n", offReg));
+>         STAM_COUNTER_INC(&pThis->StatWrUnknown);
+>         return VINF_SUCCESS;
+7426,7428c7182,7186
+<     uint32_t iReg = (offReg - pThis->cap_length) >> 2;
+<     if (iReg < XHCI_NUM_OPREGS)
+<         return true;
+---
+>     /*
+>      * Validate the access (in case of IOM bug or incorrect MMIO registration).
+>      */
+>     AssertMsgReturn(cb == sizeof(uint32_t), ("IOM bug? %RGp LB %d\n", off, cb), VINF_SUCCESS);
+>     AssertMsgReturn(!(off & 0x3),    ("IOM bug? %RGp LB %d\n", off, cb), VINF_SUCCESS);
+7430,7435c7188,7233
+<     if (iReg >= (XHCI_PORT_REG_OFFSET >> 2)) {
+<         iReg -= (XHCI_PORT_REG_OFFSET >> 2);
+<         uint32_t iPort = iReg / XHCI_NUM_PORTREGS;
+<         if (iPort < XHCI_NDP) {
+<             uint32_t portReg = (off >> 2) & (XHCI_NUM_PORTREGS - 1);
+<             return portReg < XHCI_NUM_PORTREGS;
+---
+>     /*
+>      * Validate the register and call the write operator.
+>      */
+>     VBOXSTRICTRC rcStrict = VINF_IOM_MMIO_UNUSED_FF;
+>     if (offReg >= XHCI_DOORBELL_OFFSET)
+>     {
+>         /* Let's spring into action... as long as the xHC is running. */
+>         iReg = (offReg - XHCI_DOORBELL_OFFSET) >> 2;
+>         if ((pThis->cmd & XHCI_CMD_RS) && iReg < XHCI_NDS)
+>         {
+>             if (iReg == 0)
+>             {
+>                 /* DB0 aka Command Ring. */
+>                 STAM_COUNTER_INC(&pThis->StatWrDoorBell0);
+>                 if (*pu32 == 0)
+>                 {
+>                     /* Set the Command Ring state to Running if not already set. */
+>                     if (!(pThis->crcr & XHCI_CRCR_CRR))
+>                     {
+>                         Log(("Command ring entered Running state\n"));
+>                         ASMAtomicOrU64(&pThis->crcr, XHCI_CRCR_CRR);
+>                     }
+>                     xhciKickWorker(pDevIns, pThis, XHCI_JOB_PROCESS_CMDRING, 0);
+>                 }
+>                 else
+>                     Log2(("Ignoring DB0 write with value %X!\n", *pu32));
+>             }
+>             else
+>             {
+>                 /* Device context doorbell. Do basic parameter checking to avoid
+>                  * waking up the worker thread needlessly.
+>                  */
+>                 STAM_COUNTER_INC(&pThis->StatWrDoorBellN);
+>                 uint8_t uDBTarget = *pu32 & XHCI_DB_TGT_MASK;
+>                 Assert(uDBTarget < 32); /// @todo Report an error? Or just ignore?
+>                 if (uDBTarget < 32)
+>                 {
+>                     Log2(("Ring bell for slot %u, DCI %u\n", iReg, uDBTarget));
+>                     ASMAtomicOrU32(&pThis->aBellsRung[ID_TO_IDX(iReg)], 1 << uDBTarget);
+>                     xhciKickWorker(pDevIns, pThis, XHCI_JOB_DOORBELL, *pu32);
+>                 }
+>                 else
+>                     Log2(("Ignoring DB%u write with bad target %u!\n", iReg, uDBTarget));
+>             }
+>             rcStrict = VINF_SUCCESS;
+>             Log2(("xhciWrite: DBellReg (DB %u) %RGp size=%d <- val=%x (rc=%d)\n", iReg, off, cb, *(uint32_t *)pv, VBOXSTRICTRC_VAL(rcStrict)));
+7437a7236,7244
+>     else if (offReg >= XHCI_RTREG_OFFSET)
+>     {
+>         /* Run-time registers. */
+>         Assert(offReg < XHCI_DOORBELL_OFFSET);
+>         /* NB: The MFINDEX register is R/O. */
+>         if (offReg >= XHCI_RTREG_OFFSET + (RT_ELEMENTS(g_aIntrRegs) * sizeof(uint32_t)))
+>         {
+>             Assert((offReg - XHCI_RTREG_OFFSET) / (RT_ELEMENTS(g_aIntrRegs) * sizeof(uint32_t)) > 0);
+>             const uint32_t iIntr = (offReg - XHCI_RTREG_OFFSET) / (RT_ELEMENTS(g_aIntrRegs) * sizeof(uint32_t)) - 1;
+7439,7479c7246,7257
+<     if (off >= XHCI_XECP_OFFSET && off < (XHCI_XECP_OFFSET + XHCI_EXT_CAP_SIZE))
+<         return true;
+< 
+<     return false;
+< }*/
+< 
+< #endif
+< 
+< static DECLCALLBACK(VBOXSTRICTRC) xhciMmioWrite(PPDMDEVINS pDevIns, void *pvUser, RTGCPHYS off, void const *pv, unsigned cb)
+< {
+<     PXHCI               pThis  = PDMDEVINS_2_DATA(pDevIns, PXHCI);
+<     uint32_t      offReg = (uint32_t)off;
+<     uint32_t *    pu32   = (uint32_t *)pv;
+<     RT_NOREF(pvUser);
+< 
+<     //Log2(("xhciWrite %RGp (offset %04X) %x size=%d\n", off, offReg, *(uint32_t *)pv, cb));
+< 
+<     //LogRel(("xHCI: CRITICAL WRITE to register 0x%x <- 0x%x\n", offReg, *pu32));
+< 
+<     VBOXSTRICTRC rcStrict = VINF_IOM_MMIO_UNUSED_FF;
+< 
+< /*
+< // Harness to enable nested fuzzing
+< 
+< #if defined(IN_RING0)
+<     if (0x1338 == offReg
+< 	&& 0x8888 == *pu32) {
+<     	kafl_agent_init();	
+<     	
+< 	return rcStrict;
+<     } else if (0x1340 == offReg
+< 	&& 0x8888 == *pu32) {
+< 	//kafl_hprintf("L1: release");
+<     	kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+< 	return rcStrict;
+<     } else if (0x1348 == offReg
+< 	&& 0x8888 == *pu32) {
+<     	kAFL_hypercall(HYPERCALL_KAFL_NEXT_PAYLOAD, 0);
+<     	kAFL_hypercall(HYPERCALL_KAFL_ACQUIRE, 0);
+< 	//kafl_hprintf("start fuzzing loop");
+< 	return rcStrict;
+---
+>             if (iIntr < XHCI_NINTR)
+>             {
+>                 iReg = (offReg >> 2) & (RT_ELEMENTS(g_aIntrRegs) - 1);
+>                 const XHCIINTRREGACC *pReg = &g_aIntrRegs[iReg];
+>                 if (pReg->pfnIntrWrite)
+>                 {
+>                     PXHCIINTRPTR pIntr = &pThis->aInterrupters[iIntr];
+>                     rcStrict = pReg->pfnIntrWrite(pDevIns, pThis, pIntr, *pu32);
+>                     Log2(("xhciWrite: IntrReg (intr %u): %RGp (%s) size=%d <- val=%x (rc=%d)\n", iIntr, off, pReg->pszName, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+>                 }
+>             }
+>         }
+7481,7496c7259,7288
+< #endif
+< 
+< 
+<     rcStrict = xhciMmioWriteFuzzInternal(pDevIns, pvUser, off, pu32, sizeof(uint32_t));
+< 
+<     if(  rcStrict == VINF_SUCCESS
+<                   || rcStrict == VINF_EM_DBG_STOP
+<                   || rcStrict == VINF_EM_DBG_EVENT
+<                   || rcStrict == VINF_EM_DBG_BREAKPOINT
+<                   || rcStrict == VINF_EM_OFF
+<                   || rcStrict == VINF_EM_SUSPEND
+<                   || rcStrict == VINF_EM_RESET) {
+<     
+<     	return rcStrict;
+<     } else{
+<     	return VINF_SUCCESS;
+---
+>     else
+>     {
+>         /* Operational registers (incl. port registers). */
+>         Assert(offReg < XHCI_RTREG_OFFSET);
+>         iReg = (offReg - pThis->cap_length) >> 2;
+>         if (iReg < RT_ELEMENTS(g_aOpRegs))
+>         {
+>             const XHCIREGACC *pReg = &g_aOpRegs[iReg];
+>             if (pReg->pfnWrite)
+>             {
+>                 rcStrict = pReg->pfnWrite(pDevIns, pThis, iReg, *(uint32_t *)pv);
+>                 Log2(("xhciWrite: OpReg %RGp (%s) size=%d <- val=%x (rc=%d)\n", off, pReg->pszName, cb, *(uint32_t *)pv, VBOXSTRICTRC_VAL(rcStrict)));
+>             }
+>         }
+>         else if (iReg >= (XHCI_PORT_REG_OFFSET >> 2))
+>         {
+>             iReg -= (XHCI_PORT_REG_OFFSET >> 2);
+>             const uint32_t iPort = iReg / RT_ELEMENTS(g_aPortRegs);
+>             if (iPort < XHCI_NDP_CFG(pThis))
+>             {
+>                 iReg = (offReg >> 2) & (RT_ELEMENTS(g_aPortRegs) - 1);
+>                 Assert(iReg < RT_ELEMENTS(g_aPortRegs));
+>                 const XHCIREGACC *pReg = &g_aPortRegs[iReg];
+>                 if (pReg->pfnWrite)
+>                 {
+>                     rcStrict = pReg->pfnWrite(pDevIns, pThis, iPort, *pu32);
+>                     Log2(("xhciWrite: PortReg (port %u): %RGp (%s) size=%d <- val=%x (rc=%d)\n", IDX_TO_ID(iPort), off, pReg->pszName, cb, *pu32, VBOXSTRICTRC_VAL(rcStrict)));
+>                 }
+>             }
+>         }
+7498,7529d7289
+< */
+<     RT_NOREF(pvUser);
+<     
+<     
+<     //kafl_hprintf("Just received the a request %x %x\n", off, *pu32);
+< 
+< // Basic harness solely for the L1
+< #if defined(IN_RING0)
+< 
+<     //kafl_hprintf("Just received the a request r0\n");
+<     // we call kafl_agent_init here and not in the constructor because we need 
+<     // to have a proper payload context first which is not guaranteed if the r0 ctor is called before the r3 ctor
+<     if (0x1448 == offReg && 0x8888 == *pu32) {
+< 
+< 	    //kafl_hprintf("Just received the jmp request\n");
+<     	    kAFL_hypercall(HYPERCALL_KAFL_NEXT_PAYLOAD, 0);
+<     	    kAFL_hypercall(HYPERCALL_KAFL_ACQUIRE, 0);
+< 
+< 	    for (int i = 0; i < 5; ++i) {
+< 		    kafl_fuzz_buffer(&off, sizeof(off));
+< 		    kafl_fuzz_buffer(pu32, sizeof(*pu32));
+< 
+< 		    // validate the offset
+< 		    if ((off & 0x3) || !xhci_is_interesting(off)) continue;
+< 
+< 		    rcStrict = xhciMmioWriteFuzzInternal(pDevIns, pvUser, off, pu32, sizeof(uint32_t));
+< 	    
+< 		    if ((VBOXSTRICTRC)VINF_IOM_R3_MMIO_WRITE == rcStrict) {
+< 			//kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+< 			return rcStrict;
+< 		    }
+< 	    }
+7531c7291,7298
+< 	    kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+---
+>     if (rcStrict != VINF_IOM_MMIO_UNUSED_FF)
+>     { /* likely */ }
+>     else
+>     {
+>         /* Ignore writes to unimplemented or read-only registers. */
+>         STAM_COUNTER_INC(&pThis->StatWrUnknown);
+>         Log(("xHCI: Trying to write unimplemented or R/O register at offset %04X!\n", offReg));
+>         rcStrict = VINF_SUCCESS;
+7533,7538d7299
+< #else
+<     rcStrict = xhciMmioWriteFuzzInternal(pDevIns, pvUser, off, pv, cb);
+<     kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+<     return rcStrict;
+< #endif
+< 
+7540d7300
+<     rcStrict = xhciMmioWriteFuzzInternal(pDevIns, pvUser, off, pv, cb);
+7661c7421
+<     //Assert(uPass == SSM_PASS_FINAL); NOREF(uPass);
+---
+>     Assert(uPass == SSM_PASS_FINAL); NOREF(uPass);
+7679c7439
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+7699c7459
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+7720c7480
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+7756,7757c7516,7517
+<     //AssertRCReturn(rc, rc);
+<     //AssertReturn(u32Dummy == UINT32_MAX, VERR_SSM_DATA_UNIT_FORMAT_CHANGED);
+---
+>     AssertRCReturn(rc, rc);
+>     AssertReturn(u32Dummy == UINT32_MAX, VERR_SSM_DATA_UNIT_FORMAT_CHANGED);
+8134c7894
+<     //AssertMsgRCReturn(rc, ("Configuration error: Failed to attach root hub driver to LUN #%d! (%Rrc)\n", iLun, rc), rc);
+---
+>     AssertMsgRCReturn(rc, ("Configuration error: Failed to attach root hub driver to LUN #%d! (%Rrc)\n", iLun, rc), rc);
+8137,8139c7897,7899
+<     //AssertMsgReturn(pRh->pIRhConn,
+<                     //("Configuration error: The driver doesn't provide the VUSBIROOTHUBCONNECTOR interface!\n"),
+<                     //VERR_PDM_MISSING_INTERFACE);
+---
+>     AssertMsgReturn(pRh->pIRhConn,
+>                     ("Configuration error: The driver doesn't provide the VUSBIROOTHUBCONNECTOR interface!\n"),
+>                     VERR_PDM_MISSING_INTERFACE);
+8149,8150d7908
+< #include <sanitizer/asan_interface.h>
+< 
+8167,8200d7924
+< #if defined(IN_RING3)      
+<     kafl_hprintf("Userland device init code hit\n");
+<     //payload_init(pDevIns);
+< 
+<     uintptr_t addr = (uintptr_t)xhciMmioWrite;
+<     addr = addr & ~0xfff;
+<     uintptr_t base = addr;// & ~((uintptr_t)0xD00000); // 10 MB alignment
+<     void* range_start = (void*)(base - 0x10000000); // 10 MB before
+<     void* range_end   = (void*)(base + 0x10000000); // 10 MB after
+< 
+<   uintptr_t seg_start2 = 0x555555556000;
+< 
+<   uintptr_t base2 = seg_start2 & ~((uintptr_t)0xA00000); // 10 MB alignment
+< 
+<   void* range_start2 = (void*)(base2 - 0xA00000); // 10 MB before
+<   void* range_end2   = (void*)(base2 + 0xA00000); // 10 MB after
+< 
+< 
+< /*
+<  *  // uncomment this to enable ring3 fuzzing
+< */
+<     //uintptr_t addr = (uintptr_t)xhciMmioWrite;
+<     //uintptr_t base = (addr & ~((uintptr_t)0x1FFFFFFF)); // align down to 512 MB
+<     //void* range_start = (void*)(base - 0x80000000); // 2 GB before
+<     //void* range_end   = (void*)(base + 0x80000000); // 2 GB after
+< 
+<     // userland range of vboxDD.so
+<     //kafl_agent_setrange(0, (void* )range_start2, range_end2); // vboxheadless 
+<     //kafl_agent_setrange(1, (void* )range_start, range_end); // vboxdd.so
+<     __asan_set_error_report_callback(kafl_raise_panic);
+< 
+< #endif
+< 
+< 
+8365c8089
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+8371c8095
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+8392c8116
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+8401c8125
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+8409c8133
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+8415c8139
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+8426c8150
+<         //AssertMsgFailed(("xHCI: Failed to attach to status driver. rc=%Rrc\n", rc));
+---
+>         AssertMsgFailed(("xHCI: Failed to attach to status driver. rc=%Rrc\n", rc));
+8435c8159
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+8441c8165
+<     //AssertLogRelRCReturn(rc, rc);
+---
+>     AssertLogRelRCReturn(rc, rc);
+8444c8168
+<     //AssertLogRelRCReturn(rc, rc);
+---
+>     AssertLogRelRCReturn(rc, rc);
+8448c8172
+<     //AssertLogRelRCReturn(rc, rc);
+---
+>     AssertLogRelRCReturn(rc, rc);
+8540,8543d8263
+< #if defined(IN_RING0)
+<     kafl_agent_init();
+< #endif
+< 
+8545c8265
+<     //AssertRCReturn(rc, rc);
+---
+>     AssertRCReturn(rc, rc);
+8552,8619d8271
+< #if defined(IN_RING0)
+< 
+< ssize_t (*copy_to_user)(void *, const void *, unsigned long)
+< 	= reinterpret_cast<ssize_t (*)(void *, const void *, unsigned long)>(0xffffffff8199f460); /* T copy_to_user_nofault */;
+< 
+< ssize_t (*copy_from_user)(void *to, const void *from, unsigned long n)
+< 	= reinterpret_cast<ssize_t (*)(void *, const void *, unsigned long)>(0xffffffff8199f310); /* T copy_from_user_nofault*/;
+< 
+< 
+< struct XHCI_USER_BUFFER {
+<     void *pUserBuf;  /* user pointer to buffer */
+<     size_t       cbBuf;     /* buffer length */
+< };
+< 
+< DECLCALLBACK(int) xhciR0Request(PPDMDEVINS pDevIns,
+<                                 uint32_t   uOperation,
+<                                 uint64_t   u64Arg)
+< {
+<     RT_NOREF(uOperation);
+<     uintptr_t pvR3 = NULL;
+< /*
+<     PSUPDRVSESSION pSession = pDevIns->pSession;
+<     struct XHCI_USER_BUFFER* pUsrHdr =
+<         (struct XHCI_USER_BUFFER* )(uintptr_t)u64Arg;
+< 
+<     struct XHCI_USER_BUFFER hdr;
+< 
+<     if (copy_from_user(&hdr, pUsrHdr, sizeof(hdr)) != 0)
+<         return VERR_INVALID_PARAMETER;
+< 
+<     if (!hdr.pUserBuf || hdr.cbBuf == 0 || hdr.cbBuf > 4096)
+<         return VERR_INVALID_PARAMETER;
+<     
+<     void *kBuf = SUPR0MemAlloc(hdr.cbBuf);
+<     if (!kBuf)
+<         return VERR_NO_MEMORY;
+<     
+<     kafl_fuzz_buffer(kBuf, hdr.cbBuf);
+<     
+<     if (copy_to_user(hdr.pUserBuf, kBuf, hdr.cbBuf) != 0) {
+<         SUPR0MemFree(kBuf);
+<         return VERR_ACCESS_DENIED;
+<     }
+< 
+<     SUPR0MemFree(kBuf);
+<     */
+< 
+<     switch (uOperation) {
+< 	// copy to u64Arg the userland pointer to the shared mapping of the payload
+< 	case XHCI_REQ_PAYLOAD:
+< 		pvR3 = payload_init(pDevIns);
+< 
+< 		if (copy_to_user((void* )u64Arg, &pvR3, sizeof(pvR3)) != 0) {
+<         		kafl_habort("Cant copy the userland payload pointer to userland\n");
+< 			return VERR_NO_MEMORY;
+< 		}
+< 		break;
+<     
+<     	default:
+< 		return VERR_INVALID_PARAMETER;
+<     }
+<     
+<     return VINF_SUCCESS;
+< }
+< 
+< 
+< #endif
+< 
+8673c8325
+<     /* .pfnRequest = */             xhciR0Request,
+---
+>     /* .pfnRequest = */             NULL,
+diff -r VirtualBox-7.1.8/src/VBox/HostDrivers/Support/SUPDrv.cpp /mnt/shared/VirtualBox-7.1.8/src/VBox/HostDrivers/Support/SUPDrv.cpp
+5218d5217
+< #include <nyx.h>
+5352,5371d5350
+< 
+<     //kafl_hprintf("We just mapped: %s\n", pReq->u.In.szName);
+< 
+<     if (!memcmp(pReq->u.In.szName, "VBoxDDR0.r0", strlen("VBoxDDR0.r0"))) {
+<     	kafl_agent_setrange(0, pImage->pvImage, (void* )((uint64_t)(pImage->pvImage + pImage->cbImageBits) & ~0xfff) + 0x1000);
+< 
+< 	  kafl_hprintf("Ok we are calling setrange with %llx / %llx\n", 
+< 			   (uint64_t)pImage->pvImage,
+< 			   (uint64_t)((uint64_t)(pImage->pvImage + pImage->cbImageBits) & ~0xfff) + 0x1000);
+<     	//kafl_agent_setrange(0, 
+< 			 // pImage->pvImage /* (void* )0xffffffff81000000 */, 
+< 			 // (void* )((uint64_t)(pImage->pvImage + pImage->cbImageBits) & ~0xfff) + 0x1000);
+<     } else if (!memcmp(pReq->u.In.szName, "VMMR0.r0", strlen("VMMR0.r0"))) {
+<           kafl_hprintf("Ok we are calling setrange with %llx / %llx\n",
+<                            (uint64_t)pImage->pvImage,
+<                            (uint64_t)((uint64_t)(pImage->pvImage + pImage->cbImageBits) & ~0xfff) + 0x1000);
+<           kafl_agent_setrange(1,
+<                           pImage->pvImage,
+<                           (void* )((uint64_t)(pImage->pvImage + pImage->cbImageBits) & ~0xfff) + 0x1000);
+<     }
+diff -r VirtualBox-7.1.8/src/VBox/HostDrivers/Support/linux/Makefile-wrapper.gmk /mnt/shared/VirtualBox-7.1.8/src/VBox/HostDrivers/Support/linux/Makefile-wrapper.gmk
+104,106c104
+< 	-fno-omit-frame-pointer -fno-pie -Wno-declaration-after-statement \
+< 	-fsanitize=kernel-address
+< 	# added by me
+---
+> 	-fno-omit-frame-pointer -fno-pie -Wno-declaration-after-statement
+diff -r VirtualBox-7.1.8/src/VBox/HostDrivers/Support/linux/SUPDrv-linux.c /mnt/shared/VirtualBox-7.1.8/src/VBox/HostDrivers/Support/linux/SUPDrv-linux.c
+79a80
+> 
+diff -r VirtualBox-7.1.8/src/VBox/HostDrivers/Support/linux/files_vboxdrv /mnt/shared/VirtualBox-7.1.8/src/VBox/HostDrivers/Support/linux/files_vboxdrv
+39d38
+<     ${PATH_ROOT}/src/VBox/HostDrivers/Support/nyx_api.hpp=>nyx.h \
+Only in VirtualBox-7.1.8/src/VBox/HostDrivers/Support: nyx_api.hpp
+diff -r VirtualBox-7.1.8/src/VBox/Runtime/VBox/RTAssertShouldPanic-vbox.cpp /mnt/shared/VirtualBox-7.1.8/src/VBox/Runtime/VBox/RTAssertShouldPanic-vbox.cpp
+202,212d201
+< #define HYPERCALL_KAFL_RAX_ID                           0x01f
+< 
+< static inline uint64_t kAFL_hypercall(uint64_t p1, uint64_t p2)
+< {
+<         uint64_t nr = HYPERCALL_KAFL_RAX_ID;
+<         asm volatile ("vmcall"
+<                                   : "=a" (nr)
+<                                   : "a"(nr), "b"(p1), "c"(p2));
+<         return nr;
+< }
+< 
+230d218
+<     if (fRc) kAFL_hypercall(4, 0);
+diff -r VirtualBox-7.1.8/src/VBox/Runtime/common/misc/assert.cpp /mnt/shared/VirtualBox-7.1.8/src/VBox/Runtime/common/misc/assert.cpp
+132,148d131
+< #ifdef IN_RING0
+< 
+< #define HYPERCALL_KAFL_RELEASE                          4
+< #define HYPERCALL_KAFL_RAX_ID                           0x01f
+< #define HYPERCALL_KAFL_PANIC                            8
+< 
+< 
+< static inline uint64_t kAFL_hypercall(uint64_t p1, uint64_t p2)
+<         {
+<         uint64_t nr = HYPERCALL_KAFL_RAX_ID;
+<        	asm volatile ("vmcall"
+<                              : "=a" (nr)
+<                              : "a"(nr), "b"(p1), "c"(p2));
+< 	return nr;
+< }
+< 
+< #endif
+155,159d137
+< 
+< #ifdef IN_RING0
+<     //kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+< #endif
+< 
+283,287d260
+< 
+< #ifdef IN_RING0
+<     //kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+< #endif
+< 
+diff -r VirtualBox-7.1.8/src/VBox/Runtime/r0drv/linux/assert-r0drv-linux.c /mnt/shared/VirtualBox-7.1.8/src/VBox/Runtime/r0drv/linux/assert-r0drv-linux.c
+78,90d77
+< #define HYPERCALL_KAFL_RELEASE                          4
+< #define HYPERCALL_KAFL_RAX_ID                           0x01f
+< 
+< 
+< static inline uint64_t kAFL_hypercall(uint64_t p1, uint64_t p2)
+<         {
+<         uint64_t nr = HYPERCALL_KAFL_RAX_ID;
+<         asm volatile ("vmcall"
+<                              : "=a" (nr)
+<                              : "a"(nr), "b"(p1), "c"(p2));
+<         return nr;
+< }
+< 
+94d80
+<     kAFL_hypercall(4, 0);
+diff -r VirtualBox-7.1.8/src/VBox/VMM/VMMAll/IOMAllMmioNew.cpp /mnt/shared/VirtualBox-7.1.8/src/VBox/VMM/VMMAll/IOMAllMmioNew.cpp
+1019,1020c1019,1020
+<                   , ("%Rrc != %Rrc - Access type %d - %RGp - %s #%u\n",
+<                      VBOXSTRICTRC_VAL(rcStrict), VINF_SUCCESS, enmAccessType, GCPhysFault, pDevIns->pReg->szName, pDevIns->iInstance));
+---
+>                   , ("%Rrc - Access type %d - %RGp - %s #%u\n",
+>                      VBOXSTRICTRC_VAL(rcStrict), enmAccessType, GCPhysFault, pDevIns->pReg->szName, pDevIns->iInstance));
+diff -r VirtualBox-7.1.8/src/VBox/VMM/VMMR0/VMMR0.cpp /mnt/shared/VirtualBox-7.1.8/src/VBox/VMM/VMMR0/VMMR0.cpp
+3616,3627d3615
+< #define HYPERCALL_KAFL_RELEASE                          4
+< #define HYPERCALL_KAFL_RAX_ID                           0x01f
+< 
+< 
+< static inline uint64_t kAFL_hypercall(uint64_t p1, uint64_t p2)
+<         {
+<         uint64_t nr = HYPERCALL_KAFL_RAX_ID;
+<         asm volatile ("vmcall"
+<                              : "=a" (nr)
+<                              : "a"(nr), "b"(p1), "c"(p2));
+<         return nr;
+< }
+3636d3623
+<     //kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+3640d3626
+< 
+3657,3658c3643
+<                 if (rc) kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
+< 		return RT_FAILURE_NP(rc);
+---
+>                 return RT_FAILURE_NP(rc);
+diff -r VirtualBox-7.1.8/src/VBox/VMM/VMMR3/NEMR3Native-linux.cpp /mnt/shared/VirtualBox-7.1.8/src/VBox/VMM/VMMR3/NEMR3Native-linux.cpp
+1352d1351
+< //#include "nyx_api.hpp"
+1364,1365d1362
+< 
+<     //kafl_hprintf("Im so happy!!!!!");
