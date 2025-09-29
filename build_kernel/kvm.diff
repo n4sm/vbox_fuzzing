@@ -1,5 +1,5 @@
 diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 0544700ca..b0899bbb3 100644
+index 0544700ca..2260dce6c 100644
 --- a/arch/x86/kvm/mmu/mmu.c
 +++ b/arch/x86/kvm/mmu/mmu.c
 @@ -5523,6 +5523,8 @@ static void init_kvm_nested_mmu(struct kvm_vcpu *vcpu,
@@ -7,7 +7,7 @@ index 0544700ca..b0899bbb3 100644
  	 * the gva_to_gpa functions between mmu and nested_mmu are swapped.
  	 */
 +
-+	printk("paging64_gva_to_gpa: %px\n", paging64_gva_to_gpa);
++	//printk("paging64_gva_to_gpa: %px\n", paging64_gva_to_gpa);
  	if (!is_paging(vcpu))
  		g_context->gva_to_gpa = nonpaging_gva_to_gpa;
  	else if (is_long_mode(vcpu))
